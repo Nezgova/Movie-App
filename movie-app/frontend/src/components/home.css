@@ -1,179 +1,167 @@
 /* General Styles */
 body {
+  font-family: 'Arial', sans-serif;
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #1c1c1c;
-  color: #fff;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #121212; /* Dark background */
+  color: white; /* Text color */
 }
 
+/* Homepage Styles */
 .homepage {
-  margin-top: 200px;
-  width:114rem;
-  height: 800px;
+  margin-top: 0px;
+  width: 120vh;
+  height: 100vh;
+  padding: 20px;
+  overflow: auto;
 }
 
 /* Hero Section */
 .hero-section {
   position: relative;
-  width: 100%;
-  height: 70vh;
+  height: 400px;
   background-size: cover;
   background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .hero-content {
-  background: rgba(0, 0, 0, 0.5);
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 80%;
+  z-index: 2;
 }
 
-.hero-content h1 {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
+.hero-description {
+  display: none;
+  transition: opacity 0.3s ease-in-out;
 }
 
-.hero-content p {
-  font-size: 1rem;
-  margin-bottom: 20px;
-}
-
-.hero-content button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #e50914;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.hero-content button:hover {
-  background-color: #b00610;
-}
-
-/* Hero Navigation */
-.hero-navigation {
-  margin-top: 20px;
+/* Show description on hover */
+.hero-section:hover .hero-description {
+  display: block;
+  opacity: 1;
 }
 
 .hero-navigation button {
-  background: none;
-  border: 2px solid white;
+  background-color: rgba(255, 0, 0, 0.7); /* Glowing red background */
   color: white;
-  padding: 10px 20px;
-  margin: 0 10px;
-  border-radius: 5px;
+  padding: 15px;
+  border: none;
   cursor: pointer;
-  font-size: 1rem;
+  margin: 5px;
+  font-size: 20px;
+  border-radius: 50%; /* Round buttons */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .hero-navigation button:hover {
-  background-color: white;
-  color: black;
-}
-
-.trending-navigation {
-  margin-top: 10px;
-}
-
-.trending-navigation button {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: none;
-  margin: 0 5px;
-  padding: 8px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.trending-navigation button:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 0, 0, 1); /* Bright red */
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.8); /* Glowing effect */
 }
 
 /* Search Bar */
 .search-bar {
   display: flex;
   justify-content: center;
-  padding: 20px;
-  background: #101010;
+  margin: 20px 0;
 }
 
 .search-bar input {
-  width: 40%;
   padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #444;
+  font-size: 16px;
+  width: 60%;
+  border: 2px solid #ff4747; /* Red border */
   border-radius: 5px;
-  background: #333;
-  color: #fff;
-}
-
-.search-bar input::placeholder {
-  color: #aaa;
+  background-color: #1a1a1a; /* Dark background for input */
+  color: white; /* Text color */
 }
 
 .search-bar button {
+  padding: 10px 15px;
+  font-size: 16px;
   margin-left: 10px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #e50914;
-  border: none;
+  background-color: #ff4747; /* Red background */
   color: white;
-  cursor: pointer;
+  border: none;
   border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .search-bar button:hover {
-  background-color: #f40612;
-}
-/* Search Results Section */
-.search-results {
-  padding: 20px;
-  background-color: #101010;
-  color: #fff;
-}
-
-.search-results h2 {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
+  background-color: #e43f3f; /* Darker red */
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Glowing effect */
 }
 
 /* Movie Grid */
 .movie-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 20px;
+  margin: 20px 0;
 }
 
-/* Movie Card */
-.movie-card {
-  cursor: pointer;
-  background-color: #202020;
-  border-radius: 10px;
-  overflow: hidden;
+.movie-grid h2 {
   text-align: center;
-  transition: transform 0.3s;
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #ff4747; /* Red color for genre headings */
+}
+
+.movie-grid .movie-card {
+  display: inline-block;
+  width: 22%;
+  margin: 1%;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .movie-card:hover {
   transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(255, 0, 0, 0.3); /* Glowing red effect */
 }
 
 .card-poster {
-  width: 100%;
-  height: 225px;
+  height: 350px;
   background-size: cover;
   background-position: center;
+  border-radius: 10px;
 }
 
 .movie-card h3 {
-  margin: 10px 0;
-  font-size: 1rem;
-  color: #fff;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 18px;
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+}
+
+/* Glowing Text Effect */
+h1, h2, h3 {
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Glowing text effect */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .movie-grid .movie-card {
+    width: 48%;
+  }
+
+  .search-bar input {
+    width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-grid .movie-card {
+    width: 100%;
+  }
 }

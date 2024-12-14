@@ -1,33 +1,93 @@
+/* Movie Detail Page Styles */
+
+/* General Styles */
 .movie-detail {
-    padding: 20px;
-    background-color: #fff;
-  }
-  
-  .movie-info {
-    display: flex;
-    margin-bottom: 20px;
-  }
-  
-  .movie-poster {
-    width: 200px;
-    margin-right: 20px;
-  }
-  
-  .movie-trailer iframe {
-    width: 100%;
-    height: 400px;
-  }
-  
-  .watch-button {
-    padding: 10px 20px;
-    background-color: #ff6347;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  
-  .watch-button:hover {
-    background-color: #ff4500;
-  }
-  
+  background-color: #121212; /* Dark background */
+  color: white;
+  margin-top: 200px;
+  width: 120vh;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  font-family: 'Arial', sans-serif; /* Default font */
+}
+
+.movie-detail h1 {
+  text-align: center;
+  font-size: 48px;
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Glowing red text */
+}
+
+.movie-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.movie-poster {
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.movie-description {
+  width: 60%;
+  padding: 20px;
+}
+
+.movie-description p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.movie-rating {
+  margin-top: 10px;
+  font-size: 20px;
+  color: #ff4747; /* Red color for rating */
+}
+
+/* Cast Section */
+.movie-cast {
+  margin-top: 40px;
+}
+
+.cast-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.cast-member,
+.director-info {
+  text-align: center;
+  margin: 10px;
+}
+
+.actor-photo,
+.director-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.cast-member p,
+.director-info p {
+  margin-top: 5px;
+}
+
+.watch-button {
+  background-color: #ff4747; /* Red background */
+  color: white;
+  padding: 12px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.watch-button:hover {
+  background-color: #e43f3f; /* Darker red */
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Glowing effect */
+}

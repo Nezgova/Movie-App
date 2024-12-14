@@ -4,9 +4,11 @@ import HomePage from './components/home';
 import Register from './components/register';
 import MovieDetail from './components/MovieDetail';
 import WatchPage from './components/WatchPage';
+import Navbar from './components/Navbar'; // Import Navbar
 
 const App = () => (
   <Router>
+    <Navbar />
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<Login />} />
