@@ -49,7 +49,7 @@ const HomePage = () => {
 
   // Handle movie click
   const handleMovieClick = (id) => {
-    navigate(`/movie/${id}`);
+    navigate(`/watch/${id}`);
   };
 
   // Handle navigation in the hero section
