@@ -5,6 +5,10 @@ import Register from './components/register';
 import MovieDetail from './components/MovieDetail';
 import WatchPage from './components/WatchPage';
 import Navbar from './components/Navbar'; // Import Navbar
+import SeriesPage from './components/series';
+import SerieDetail from './components/SerieDetail';  // Correct relative path
+import WatchPageSerie from './components/WatchPageSerie';
+
 
 const App = () => (
   <Router>
@@ -15,8 +19,11 @@ const App = () => (
       <Route path="/register" element={<Register />} />
       <Route path="/movie/:id" element={<MovieDetail />} />
       <Route path="/watch/:id" element={<WatchPage />} />
+      <Route path="/series" element={<SeriesPage />} />
+      <Route path="/seriedetail/:id" element={<SerieDetail/>} />
+      <Route path="/watchserie/:id/:season/:episode" element={<WatchPageSerie />} />
     </Routes>
-  </Router>
+  </Router> 
 );
 
 export default App;
