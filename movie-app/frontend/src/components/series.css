@@ -1,0 +1,179 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #121212; /* Dark background */
+    color: white; /* Text color */
+  }
+  
+  /* Homepage Styles */
+  .homepage {
+    margin-top: 0px;
+    width: 120vh;
+    height: 100vh;
+    padding: 20px;
+    overflow: auto;
+  }
+  
+  /* Hero Section */
+  .hero-section {
+    position: relative;
+    height: 50vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 20px;
+    color: #fff;
+    overflow: hidden;
+  }
+  
+  .hero-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.7); /* Dark overlay for better contrast */
+    width: 100%;
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    opacity: 0; /* Hidden initially */
+  }
+  
+  .hero-section:hover .hero-content {
+    transform: translateY(0); /* Slide-up effect */
+    opacity: 1; /* Fade-in effect */
+  }
+  
+  .hero-content h1 {
+    font-size: 2.25rem;
+    margin-bottom: 10px;
+  }
+  
+  .hero-content p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  
+  .hero-content button {
+    background-color: #ff4747;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 1rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .hero-content button:hover {
+    background-color: #ff2626;
+  }
+  
+  
+  /* Search Bar */
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .search-bar input {
+    padding: 10px;
+    font-size: 16px;
+    width: 60%;
+    border: 2px solid #ff4747; /* Red border */
+    border-radius: 5px;
+    background-color: #1a1a1a; /* Dark background for input */
+    color: white; /* Text color */
+  }
+  
+  .search-bar button {
+    padding: 10px 15px;
+    font-size: 16px;
+    margin-left: 10px;
+    background-color: #ff4747; /* Red background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .search-bar button:hover {
+    background-color: #e43f3f; /* Darker red */
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Glowing effect */
+  }
+  
+  /* Movie Grid */
+  .movie-grid {
+    margin: 20px 0;
+  }
+  
+  .movie-grid h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #ff4747; /* Red color for genre headings */
+  }
+  
+  .movie-grid .movie-card {
+    display: inline-block;
+    width: 22%;
+    margin: 1%;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .movie-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(255, 0, 0, 0.3); /* Glowing red effect */
+  }
+  
+  .card-poster {
+    height: 350px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+  }
+  
+  .movie-card h3 {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Glowing Text Effect */
+  h1, h2, h3 {
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Glowing text effect */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .movie-grid .movie-card {
+      width: 48%;
+    }
+  
+    .search-bar input {
+      width: 80%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .movie-grid .movie-card {
+      width: 100%;
+    }
+  }
+  

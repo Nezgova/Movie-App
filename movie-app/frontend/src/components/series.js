@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './home.css';
+import './series.css';
 
 const SeriesPage = () => {
   const [seriesByGenre, setSeriesByGenre] = useState({});
   const [genres, setGenres] = useState([]);
-  const [popularSeries, setPopularSeries] = useState([]);
+  const [trendingSeries, setTrendingSeries] = useState([]);
   const [featuredIndex, setFeaturedIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -22,12 +22,12 @@ const SeriesPage = () => {
         const genreData = await genreResponse.json();
         setGenres(genreData.genres);
 
-        // Fetch popular TV series
-        const popularResponse = await fetch(
-          `https://api.themoviedb.org/3/tv/popular?api_key=${apiKey}`
+        // Fetch trending TV series
+        const trendingResponse = await fetch(
+          `https://api.themoviedb.org/3/trending/tv/day?api_key=${apiKey}`
         );
-        const popularData = await popularResponse.json();
-        setPopularSeries(popularData.results);
+        const trendingData = await trendingResponse.json();
+        setTrendingSeries(trendingData.results);
 
         // Fetch TV series for each genre
         const genreSeries = {};
@@ -54,12 +54,12 @@ const SeriesPage = () => {
 
   // Handle navigation in the hero section
   const nextFeaturedSeries = () => {
-    setFeaturedIndex((prevIndex) => (prevIndex + 1) % popularSeries.length);
+    setFeaturedIndex((prevIndex) => (prevIndex + 1) % trendingSeries.length);
   };
 
   const prevFeaturedSeries = () => {
     setFeaturedIndex((prevIndex) =>
-      prevIndex === 0 ? popularSeries.length - 1 : prevIndex - 1
+      prevIndex === 0 ? trendingSeries.length - 1 : prevIndex - 1
     );
   };
 
@@ -89,7 +89,7 @@ const SeriesPage = () => {
     card.style.setProperty('--y', `${y}px`);
   };
 
-  const featuredSeries = popularSeries[featuredIndex];
+  const featuredSeries = trendingSeries[featuredIndex];
 
   return (
     <div className="homepage">
