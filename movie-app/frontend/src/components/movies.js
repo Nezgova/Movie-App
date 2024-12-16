@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './series.css';
+import './movies.css';
 
-const SeriesPage = () => {
-  const [seriesByGenre, setSeriesByGenre] = useState({});
+const Movies = () => {
+  const [moviesByGenre, setMoviesByGenre] = useState({});
   const [genres, setGenres] = useState([]);
-  const [trendingSeries, setTrendingSeries] = useState([]);
+  const [popularMovies, setPopularMovies] = useState([]);
   const [featuredIndex, setFeaturedIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -13,53 +13,53 @@ const SeriesPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchSeries = async () => {
+    const fetchMovies = async () => {
       try {
-        // Fetch all TV genres
+        // Fetch all genres
         const genreResponse = await fetch(
-          `https://api.themoviedb.org/3/genre/tv/list?api_key=${apiKey}`
+          `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`
         );
         const genreData = await genreResponse.json();
         setGenres(genreData.genres);
 
-        // Fetch trending TV series
-        const trendingResponse = await fetch(
-          `https://api.themoviedb.org/3/trending/tv/day?api_key=${apiKey}`
+        // Fetch popular movies
+        const popularResponse = await fetch(
+          `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`
         );
-        const trendingData = await trendingResponse.json();
-        setTrendingSeries(trendingData.results);
+        const popularData = await popularResponse.json();
+        setPopularMovies(popularData.results);
 
-        // Fetch TV series for each genre
-        const genreSeries = {};
+        // Fetch movies for each genre
+        const genreMovies = {};
         for (const genre of genreData.genres) {
-          const genreSeriesResponse = await fetch(
-            `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&with_genres=${genre.id}`
+          const genreMoviesResponse = await fetch(
+            `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genre.id}`
           );
-          const genreSeriesData = await genreSeriesResponse.json();
-          genreSeries[genre.name] = genreSeriesData.results;
+          const genreMoviesData = await genreMoviesResponse.json();
+          genreMovies[genre.name] = genreMoviesData.results;
         }
-        setSeriesByGenre(genreSeries);
+        setMoviesByGenre(genreMovies);
       } catch (error) {
-        console.error('Error fetching series:', error);
+        console.error('Error fetching movies:', error);
       }
     };
 
-    fetchSeries();
+    fetchMovies();
   }, []);
 
-  // Handle series click
-  const handleSeriesClick = (id) => {
-    navigate(`/seriedetail/${id}`);
+  // Handle movie click
+  const handleMovieClick = (id) => {
+    navigate(`/movie/${id}`);
   };
 
   // Handle navigation in the hero section
-  const nextFeaturedSeries = () => {
-    setFeaturedIndex((prevIndex) => (prevIndex + 1) % trendingSeries.length);
+  const nextFeaturedMovie = () => {
+    setFeaturedIndex((prevIndex) => (prevIndex + 1) % popularMovies.length);
   };
 
-  const prevFeaturedSeries = () => {
+  const prevFeaturedMovie = () => {
     setFeaturedIndex((prevIndex) =>
-      prevIndex === 0 ? trendingSeries.length - 1 : prevIndex - 1
+      prevIndex === 0 ? popularMovies.length - 1 : prevIndex - 1
     );
   };
 
@@ -69,12 +69,12 @@ const SeriesPage = () => {
 
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${searchQuery}`
+        `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}`
       );
       const data = await response.json();
       setSearchResults(data.results);
     } catch (error) {
-      console.error('Error searching series:', error);
+      console.error('Error searching movies:', error);
     }
   };
 
@@ -89,31 +89,31 @@ const SeriesPage = () => {
     card.style.setProperty('--y', `${y}px`);
   };
 
-  const featuredSeries = trendingSeries[featuredIndex];
+  const featuredMovie = popularMovies[featuredIndex];
 
   return (
-    <div className="seriespage">
+    <div className="moviespage">
       {/* Hero Section */}
-      {featuredSeries && (
+      {featuredMovie && (
         <div
           className="hero-section"
           style={{
-            backgroundImage: `url(https://image.tmdb.org/t/p/original${featuredSeries.backdrop_path})`,
+            backgroundImage: `url(https://image.tmdb.org/t/p/original${featuredMovie.backdrop_path})`,
           }}
         >
           <div className="hero-content">
-            <h1>{featuredSeries.name}</h1>
+            <h1>{featuredMovie.title}</h1>
             <div className="hero-description">
-              <p>{featuredSeries.overview}</p>
+              <p>{featuredMovie.overview}</p>
             </div>
-            <button onClick={() => handleSeriesClick(featuredSeries.id)}>
+            <button onClick={() => handleMovieClick(featuredMovie.id)}>
               Details
             </button>
             <div className="hero-navigation">
-              <button onClick={prevFeaturedSeries}>
+              <button onClick={prevFeaturedMovie}>
                 <i className="fas fa-chevron-left"></i> {/* Left Arrow Icon */}
               </button>
-              <button onClick={nextFeaturedSeries}>
+              <button onClick={nextFeaturedMovie}>
                 <i className="fas fa-chevron-right"></i> {/* Right Arrow Icon */}
               </button>
             </div>
@@ -125,7 +125,7 @@ const SeriesPage = () => {
       <div className="search-bar">
         <input
           type="text"
-          placeholder="Search for series..."
+          placeholder="Search for movies or series..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -137,20 +137,20 @@ const SeriesPage = () => {
         <div className="search-results">
           <h2>Search Results</h2>
           <div className="movie-grid">
-            {searchResults.map((series) => (
+            {searchResults.map((movie) => (
               <div
                 className="movie-card"
-                key={series.id}
+                key={movie.id}
                 onMouseMove={handleMouseMove}
-                onClick={() => handleSeriesClick(series.id)}
+                onClick={() => handleMovieClick(movie.id)}
               >
                 <div
                   className="card-poster"
                   style={{
-                    backgroundImage: `url(https://image.tmdb.org/t/p/w500${series.poster_path})`,
+                    backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.poster_path})`,
                   }}
                 ></div>
-                <h3>{series.name}</h3>
+                <h3>{movie.title}</h3>
               </div>
             ))}
           </div>
@@ -162,21 +162,21 @@ const SeriesPage = () => {
         <>
           {genres.map((genre) => (
             <div className="movie-grid" key={genre.id}>
-              <h2>{genre.name} Series</h2>
-              {seriesByGenre[genre.name]?.map((series) => (
+              <h2>{genre.name} Movies</h2>
+              {moviesByGenre[genre.name]?.map((movie) => (
                 <div
                   className="movie-card"
-                  key={series.id}
+                  key={movie.id}
                   onMouseMove={handleMouseMove}
-                  onClick={() => handleSeriesClick(series.id)}
+                  onClick={() => handleMovieClick(movie.id)}
                 >
                   <div
                     className="card-poster"
                     style={{
-                      backgroundImage: `url(https://image.tmdb.org/t/p/w500${series.poster_path})`,
+                      backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.poster_path})`,
                     }}
                   ></div>
-                  <h3>{series.name}</h3>
+                  <h3>{movie.title}</h3>
                 </div>
               ))}
             </div>
@@ -187,4 +187,4 @@ const SeriesPage = () => {
   );
 };
 
-export default SeriesPage;
+export default Movies;
