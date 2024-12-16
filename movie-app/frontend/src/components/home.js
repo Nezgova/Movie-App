@@ -3,120 +3,104 @@ import { useNavigate } from 'react-router-dom';
 import './home.css';
 
 const HomePage = () => {
-  const [moviesByGenre, setMoviesByGenre] = useState({});
-  const [genres, setGenres] = useState([]);
-  const [popularMovies, setPopularMovies] = useState([]);
-  const [featuredIndex, setFeaturedIndex] = useState(0);
+  const [trendingMovies, setTrendingMovies] = useState([]);
+  const [trendingSeries, setTrendingSeries] = useState([]);
+  const [featuredIndex, setFeaturedIndex] = useState(0); // Index for hero content
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const apiKey = 'bfbc42cc51a737715f9ab554c951d6ad';
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    const fetchTrendingContent = async () => {
       try {
-        // Fetch all genres
-        const genreResponse = await fetch(
-          `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`
+        const moviesResponse = await fetch(
+          `https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`
         );
-        const genreData = await genreResponse.json();
-        setGenres(genreData.genres);
+        const moviesData = await moviesResponse.json();
+        setTrendingMovies(moviesData.results);
 
-        // Fetch popular movies
-        const popularResponse = await fetch(
-          `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`
+        const seriesResponse = await fetch(
+          `https://api.themoviedb.org/3/trending/tv/day?api_key=${apiKey}`
         );
-        const popularData = await popularResponse.json();
-        setPopularMovies(popularData.results);
-
-        // Fetch movies for each genre
-        const genreMovies = {};
-        for (const genre of genreData.genres) {
-          const genreMoviesResponse = await fetch(
-            `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genre.id}`
-          );
-          const genreMoviesData = await genreMoviesResponse.json();
-          genreMovies[genre.name] = genreMoviesData.results;
-        }
-        setMoviesByGenre(genreMovies);
+        const seriesData = await seriesResponse.json();
+        setTrendingSeries(seriesData.results);
       } catch (error) {
-        console.error('Error fetching movies:', error);
+        console.error('Error fetching trending content:', error);
       }
     };
 
-    fetchMovies();
+    fetchTrendingContent();
   }, []);
 
-  // Handle movie click
-  const handleMovieClick = (id) => {
-    navigate(`/movie/${id}`);
+  // Combine movies and series for the hero section
+  const heroContent = [...trendingMovies, ...trendingSeries];
+
+  // Handle arrow navigation in the hero section
+  const handleArrowClick = (direction) => {
+    if (direction === 'left') {
+      setFeaturedIndex((prevIndex) =>
+        prevIndex === 0 ? heroContent.length - 1 : prevIndex - 1
+      );
+    } else {
+      setFeaturedIndex((prevIndex) =>
+        prevIndex === heroContent.length - 1 ? 0 : prevIndex + 1
+      );
+    }
   };
 
-  // Handle navigation in the hero section
-  const nextFeaturedMovie = () => {
-    setFeaturedIndex((prevIndex) => (prevIndex + 1) % popularMovies.length);
+  // Handle navigation to detail pages
+  const handleContentClick = (id, type) => {
+    const route = type === 'movie' ? `/movie/${id}` : `/seriedetail/${id}`;
+    navigate(route);
   };
 
-  const prevFeaturedMovie = () => {
-    setFeaturedIndex((prevIndex) =>
-      prevIndex === 0 ? popularMovies.length - 1 : prevIndex - 1
-    );
-  };
-
-  // Handle search
+  // Handle search functionality
   const handleSearch = async () => {
     if (searchQuery.trim() === '') return;
 
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}`
+        `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${searchQuery}`
       );
       const data = await response.json();
       setSearchResults(data.results);
     } catch (error) {
-      console.error('Error searching movies:', error);
+      console.error('Error searching content:', error);
     }
   };
-
-  // Handle glowing effect on cards
-  const handleMouseMove = (e) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    card.style.setProperty('--x', `${x}px`);
-    card.style.setProperty('--y', `${y}px`);
-  };
-
-  const featuredMovie = popularMovies[featuredIndex];
 
   return (
     <div className="homepage">
       {/* Hero Section */}
-      {featuredMovie && (
+      {heroContent.length > 0 && (
         <div
           className="hero-section"
           style={{
-            backgroundImage: `url(https://image.tmdb.org/t/p/original${featuredMovie.backdrop_path})`,
+            backgroundImage: `url(https://image.tmdb.org/t/p/original${heroContent[featuredIndex]?.backdrop_path})`,
           }}
         >
           <div className="hero-content">
-            <h1>{featuredMovie.title}</h1>
-            <div className="hero-description">
-              <p>{featuredMovie.overview}</p>
-            </div>
-            <button onClick={() => handleMovieClick(featuredMovie.id)}>
+            <h1>{heroContent[featuredIndex]?.title || heroContent[featuredIndex]?.name}</h1>
+            <p>{heroContent[featuredIndex]?.overview}</p>
+            <button
+              onClick={() =>
+                handleContentClick(
+                  heroContent[featuredIndex]?.id,
+                  heroContent[featuredIndex]?.media_type || 'movie'
+                )
+              }
+            >
               Watch Now
             </button>
-            <div className="hero-navigation">
-              <button onClick={prevFeaturedMovie}>
-                <i className="fas fa-chevron-left"></i> {/* Left Arrow Icon */}
-              </button>
-              <button onClick={nextFeaturedMovie}>
-                <i className="fas fa-chevron-right"></i> {/* Right Arrow Icon */}
-              </button>
-            </div>
+             <div className="hero-navigation">
+            <button className="arrow left-arrow" onClick={() => handleArrowClick('left')}>
+              &#9664;
+            </button>
+            <button className="arrow right-arrow" onClick={() => handleArrowClick('right')}>
+              &#9654;
+            </button>
+          </div>
           </div>
         </div>
       )}
@@ -136,53 +120,80 @@ const HomePage = () => {
       {searchResults.length > 0 && (
         <div className="search-results">
           <h2>Search Results</h2>
-          <div className="movie-grid">
-            {searchResults.map((movie) => (
+          <div className="content-grid">
+            {searchResults.map((content) => (
               <div
-                className="movie-card"
-                key={movie.id}
-                onMouseMove={handleMouseMove}
-                onClick={() => handleMovieClick(movie.id)}
+                className="content-card"
+                key={content.id}
+                onClick={() =>
+                  handleContentClick(
+                    content.id,
+                    content.media_type || 'movie'
+                  )
+                }
               >
                 <div
                   className="card-poster"
                   style={{
-                    backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.poster_path})`,
+                    backgroundImage: `url(https://image.tmdb.org/t/p/w500${content.poster_path})`,
                   }}
                 ></div>
-                <h3>{movie.title}</h3>
+                <h3>{content.title || content.name}</h3>
               </div>
             ))}
           </div>
         </div>
       )}
 
-      {/* Genre-Based Sections (only show if no search results) */}
-      {searchResults.length === 0 && genres.length > 0 && (
-        <>
-          {genres.map((genre) => (
-            <div className="movie-grid" key={genre.id}>
-              <h2>{genre.name} Movies</h2>
-              {moviesByGenre[genre.name]?.map((movie) => (
-                <div
-                  className="movie-card"
-                  key={movie.id}
-                  onMouseMove={handleMouseMove}
-                  onClick={() => handleMovieClick(movie.id)}
-                >
-                  <div
-                    className="card-poster"
-                    style={{
-                      backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.poster_path})`,
-                    }}
-                  ></div>
-                  <h3>{movie.title}</h3>
-                </div>
-              ))}
+      {/* Trending Movies */}
+      <h2>Trending Movies</h2>
+      {trendingMovies.length > 0 && (
+        <div className="content-grid">
+          {trendingMovies.slice(0, 12).map((movie) => (
+            <div
+              className="content-card"
+              key={movie.id}
+              onClick={() => handleContentClick(movie.id, 'movie')}
+            >
+              <div
+                className="card-poster"
+                style={{
+                  backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.poster_path})`,
+                }}
+              ></div>
+              <h3>{movie.title}</h3>
             </div>
           ))}
-        </>
+        </div>
       )}
+      <button onClick={() => navigate('/movies')} className="view-more-btn">
+        View More
+      </button>
+
+      {/* Trending Series */}
+      <h2>Trending Series</h2>
+      {trendingSeries.length > 0 && (
+        <div className="content-grid">
+          {trendingSeries.slice(0, 12).map((series) => (
+            <div
+              className="content-card"
+              key={series.id}
+              onClick={() => handleContentClick(series.id, 'tv')}
+            >
+              <div
+                className="card-poster"
+                style={{
+                  backgroundImage: `url(https://image.tmdb.org/t/p/w500${series.poster_path})`,
+                }}
+              ></div>
+              <h3>{series.name}</h3>
+            </div>
+          ))}
+        </div>
+      )}
+      <button onClick={() => navigate('/series')} className="view-more-btn">
+        View More
+      </button>
     </div>
   );
 };

@@ -1,14 +1,3 @@
-/* General Styles */
-body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  background-color: #121212; /* Dark background */
-  color: white; /* Text color */
-}
-
-/* Homepage Styles */
 .homepage {
   margin-top: 0px;
   width: 120vh;
@@ -20,52 +9,61 @@ body {
 /* Hero Section */
 .hero-section {
   position: relative;
-  height: 400px;
+  height: 50vh;
   background-size: cover;
   background-position: center;
-  color: white;
-  padding: 20px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 20px;
+  color: #fff;
+  overflow: hidden;
 }
 
 .hero-content {
-  z-index: 2;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7); /* Dark overlay for better contrast */
+  width: 100%;
+  padding: 20px;
+  transform: translateY(100%);
+  transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+  opacity: 0; /* Hidden initially */
 }
 
-.hero-description {
-  display: none;
-  transition: opacity 0.3s ease-in-out;
+.hero-section:hover .hero-content {
+  transform: translateY(0); /* Slide-up effect */
+  opacity: 1; /* Fade-in effect */
 }
 
-/* Show description on hover */
-.hero-section:hover .hero-description {
-  display: block;
-  opacity: 1;
+.hero-content h1 {
+  font-size: 2.25rem;
+  margin-bottom: 10px;
 }
 
-.hero-navigation button {
-  background-color: rgba(255, 0, 0, 0.7); /* Glowing red background */
+.hero-content p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.hero-content button {
+  background-color: #ff4747;
   color: white;
-  padding: 15px;
   border: none;
+  padding: 10px 20px;
+  margin: 1rem;
+  font-size: 1rem;
+  border-radius: 5px;
   cursor: pointer;
-  margin: 5px;
-  font-size: 20px;
-  border-radius: 50%; /* Round buttons */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s ease-in-out;
 }
 
-.hero-navigation button:hover {
-  background-color: rgba(255, 0, 0, 1); /* Bright red */
-  box-shadow: 0 0 15px rgba(255, 0, 0, 0.8); /* Glowing effect */
+.hero-content button:hover {
+  background-color: #ff2626;
 }
 
-/* Search Bar */
 .search-bar {
   display: flex;
   justify-content: center;
@@ -73,95 +71,61 @@ body {
 }
 
 .search-bar input {
-  padding: 10px;
-  font-size: 16px;
   width: 60%;
-  border: 2px solid #ff4747; /* Red border */
-  border-radius: 5px;
-  background-color: #1a1a1a; /* Dark background for input */
-  color: white; /* Text color */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px 0 0 5px;
 }
 
 .search-bar button {
-  padding: 10px 15px;
-  font-size: 16px;
-  margin-left: 10px;
-  background-color: #ff4747; /* Red background */
+  padding: 10px;
+  background: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 0 5px 5px 0;
   cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.search-bar button:hover {
-  background-color: #e43f3f; /* Darker red */
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Glowing effect */
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  padding: 20px;
 }
 
-/* Movie Grid */
-.movie-grid {
-  margin: 20px 0;
-}
-
-.movie-grid h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 28px;
-  color: #ff4747; /* Red color for genre headings */
-}
-
-.movie-grid .movie-card {
-  display: inline-block;
-  width: 22%;
-  margin: 1%;
+.content-card {
+  cursor: pointer;
   position: relative;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Add smooth transition for shadow and scaling */
 }
 
-.movie-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(255, 0, 0, 0.3); /* Glowing red effect */
+.content-card:hover {
+  transform: scale(1.05); /* Scale up the card a little */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Add shadow on hover for depth */
 }
 
 .card-poster {
-  height: 350px;
+  height: 200px;
   background-size: cover;
   background-position: center;
-  border-radius: 10px;
+  transition: transform 0.3s ease-in-out; /* Ensure poster image transitions smoothly */
 }
 
-.movie-card h3 {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  font-size: 18px;
+.content-card:hover .card-poster {
+  transform: scale(1.1); /* Slightly zoom in the poster on hover */
+}
+
+.view-more-btn {
+  background: rgba(255, 78, 78, 0.8);
   color: white;
-  font-weight: bold;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+  border: none;
+  padding: 10px 20px;
+  margin: 10px 35%;
+  cursor: pointer;
 }
 
-/* Glowing Text Effect */
-h1, h2, h3 {
-  text-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Glowing text effect */
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .movie-grid .movie-card {
-    width: 48%;
-  }
-
-  .search-bar input {
-    width: 80%;
-  }
-}
-
-@media (max-width: 480px) {
-  .movie-grid .movie-card {
-    width: 100%;
-  }
+.view-more-btn:hover{
+  background-color:rgba(255, 0, 0, 0.8);
 }
