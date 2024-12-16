@@ -107,7 +107,7 @@ const HomePage = () => {
               <p>{featuredMovie.overview}</p>
             </div>
             <button onClick={() => handleMovieClick(featuredMovie.id)}>
-              Watch Now
+              Details
             </button>
             <div className="hero-navigation">
               <button onClick={prevFeaturedMovie}>

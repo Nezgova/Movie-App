@@ -107,7 +107,7 @@ const SeriesPage = () => {
               <p>{featuredSeries.overview}</p>
             </div>
             <button onClick={() => handleSeriesClick(featuredSeries.id)}>
-              Watch Now
+              Details
             </button>
             <div className="hero-navigation">
               <button onClick={prevFeaturedSeries}>
