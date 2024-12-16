@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './home.css';
-
+//this needs to become home instead of movies
 const HomePage = () => {
   const [moviesByGenre, setMoviesByGenre] = useState({});
   const [genres, setGenres] = useState([]);
