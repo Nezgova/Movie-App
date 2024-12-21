@@ -92,7 +92,7 @@ const SeriesPage = () => {
   const featuredSeries = trendingSeries[featuredIndex];
 
   return (
-    <div className="homepage">
+    <div className="seriespage">
       {/* Hero Section */}
       {featuredSeries && (
         <div
@@ -107,7 +107,7 @@ const SeriesPage = () => {
               <p>{featuredSeries.overview}</p>
             </div>
             <button onClick={() => handleSeriesClick(featuredSeries.id)}>
-              Watch Now
+              Details
             </button>
             <div className="hero-navigation">
               <button onClick={prevFeaturedSeries}>
