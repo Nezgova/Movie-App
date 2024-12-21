@@ -8,8 +8,8 @@ body {
     color: white; /* Text color */
   }
   
-  
-  .seriespage {
+  /* Homepage Styles */
+  .homepage {
     margin-top: 0px;
     width: 120vh;
     height: 100vh;

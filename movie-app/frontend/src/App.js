@@ -9,7 +9,7 @@ import Navbar from './components/Navbar'; // Import Navbar
 import SeriesPage from './components/series';
 import SerieDetail from './components/SerieDetail';  // Correct relative path
 import WatchPageSerie from './components/WatchPageSerie';
-import Movies from './components/movies';
+
 
 const App = () => (
   <Router>
@@ -19,7 +19,6 @@ const App = () => (
       <Route path="/movies" element={<Movies />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/movies" element={<Movies />} />
       <Route path="/movie/:id" element={<MovieDetail />} />
       <Route path="/watch/:id" element={<WatchPage />} />
       <Route path="/series" element={<SeriesPage />} />
