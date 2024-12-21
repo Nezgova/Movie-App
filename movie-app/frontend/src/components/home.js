@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './home.css';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./home.css";
 
 const HomePage = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [trendingSeries, setTrendingSeries] = useState([]);
   const [featuredIndex, setFeaturedIndex] = useState(0); // Index for hero content
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const apiKey = 'bfbc42cc51a737715f9ab554c951d6ad';
+  const apiKey = "bfbc42cc51a737715f9ab554c951d6ad";
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const HomePage = () => {
         const seriesData = await seriesResponse.json();
         setTrendingSeries(seriesData.results);
       } catch (error) {
-        console.error('Error fetching trending content:', error);
+        console.error("Error fetching trending content:", error);
       }
     };
 
@@ -38,7 +38,7 @@ const HomePage = () => {
 
   // Handle arrow navigation in the hero section
   const handleArrowClick = (direction) => {
-    if (direction === 'left') {
+    if (direction === "left") {
       setFeaturedIndex((prevIndex) =>
         prevIndex === 0 ? heroContent.length - 1 : prevIndex - 1
       );
@@ -51,13 +51,13 @@ const HomePage = () => {
 
   // Handle navigation to detail pages
   const handleContentClick = (id, type) => {
-    const route = type === 'movie' ? `/movie/${id}` : `/seriedetail/${id}`;
+    const route = type === "movie" ? `/movie/${id}` : `/seriedetail/${id}`;
     navigate(route);
   };
 
   // Handle search functionality
   const handleSearch = async () => {
-    if (searchQuery.trim() === '') return;
+    if (searchQuery.trim() === "") return;
 
     try {
       const response = await fetch(
@@ -66,7 +66,7 @@ const HomePage = () => {
       const data = await response.json();
       setSearchResults(data.results);
     } catch (error) {
-      console.error('Error searching content:', error);
+      console.error("Error searching content:", error);
     }
   };
 
@@ -81,26 +81,35 @@ const HomePage = () => {
           }}
         >
           <div className="hero-content">
-            <h1>{heroContent[featuredIndex]?.title || heroContent[featuredIndex]?.name}</h1>
+            <h1>
+              {heroContent[featuredIndex]?.title ||
+                heroContent[featuredIndex]?.name}
+            </h1>
             <p>{heroContent[featuredIndex]?.overview}</p>
             <button
               onClick={() =>
                 handleContentClick(
                   heroContent[featuredIndex]?.id,
-                  heroContent[featuredIndex]?.media_type || 'movie'
+                  heroContent[featuredIndex]?.media_type || "movie"
                 )
               }
             >
               Watch Now
             </button>
-             <div className="hero-navigation">
-            <button className="arrow left-arrow" onClick={() => handleArrowClick('left')}>
-              &#9664;
-            </button>
-            <button className="arrow right-arrow" onClick={() => handleArrowClick('right')}>
-              &#9654;
-            </button>
-          </div>
+            <div className="hero-navigation">
+              <button
+                className="arrow left-arrow"
+                onClick={() => handleArrowClick("left")}
+              >
+                &#9664;
+              </button>
+              <button
+                className="arrow right-arrow"
+                onClick={() => handleArrowClick("right")}
+              >
+                &#9654;
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -126,10 +135,7 @@ const HomePage = () => {
                 className="content-card"
                 key={content.id}
                 onClick={() =>
-                  handleContentClick(
-                    content.id,
-                    content.media_type || 'movie'
-                  )
+                  handleContentClick(content.id, content.media_type || "movie")
                 }
               >
                 <div
@@ -153,7 +159,7 @@ const HomePage = () => {
             <div
               className="content-card"
               key={movie.id}
-              onClick={() => handleContentClick(movie.id, 'movie')}
+              onClick={() => handleContentClick(movie.id, "movie")}
             >
               <div
                 className="card-poster"
@@ -166,7 +172,7 @@ const HomePage = () => {
           ))}
         </div>
       )}
-      <button onClick={() => navigate('/movies')} className="view-more-btn">
+      <button onClick={() => navigate("/movies")} className="view-more-btn">
         View More
       </button>
 
@@ -178,7 +184,7 @@ const HomePage = () => {
             <div
               className="content-card"
               key={series.id}
-              onClick={() => handleContentClick(series.id, 'tv')}
+              onClick={() => handleContentClick(series.id, "tv")}
             >
               <div
                 className="card-poster"
@@ -191,7 +197,7 @@ const HomePage = () => {
           ))}
         </div>
       )}
-      <button onClick={() => navigate('/series')} className="view-more-btn">
+      <button onClick={() => navigate("/series")} className="view-more-btn">
         View More
       </button>
     </div>

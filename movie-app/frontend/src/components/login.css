@@ -1,131 +1,169 @@
-/* Login.css */
+/* Global Styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body, html {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(135deg, #1d1d1d, #333);
+  background-size: 400% 400%;
+  animation: gradient-animation 10s ease infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  overflow: hidden; /* Prevent scrolling */
+}
+
+@keyframes gradient-animation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Background Particles */
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particles div {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: rgba(229, 1, 64, 0.8);
+  border-radius: 50%;
+  animation: particle-float 15s ease-in-out infinite;
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 1;
   }
-  
-  body {
-    height: 100vh; /* Ensure the body takes full height */
-    display: flex;
-    justify-content: center;
-    align-items: center; /* Center content vertically and horizontally */
-    background: #1d1d1d; /* Optional background for contrast */
+  50% {
+    opacity: 0.5;
+    transform: translateY(-100px) translateX(50px);
   }
-  
-  .login-wrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 400px; /* Fixed width for the form container */
-    padding: 30px;
-    background: transparent;
-    border: 5px solid #333;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Optional shadow for better visibility */
-    transition: 0.5s;
+  100% {
+    transform: translateY(-200px) translateX(-100px);
+    opacity: 0;
   }
-  
-  .login-wrapper:hover {
-    border: 5px solid #e50140;
-    box-shadow: 0 0 20px #e50140, inset 0 0 20px #e50140;
-    backdrop-filter: blur(15px);
+}
+
+/* Wrapper */
+.wrapper {
+  width: 30rem;
+  height: 80vh;
+  padding: 40px;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+h2 {
+  font-size: 2.5em;
+  margin-bottom: 30px;
+  color: #fff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-bottom: 2px solid #e50140;
+  padding-bottom: 10px;
+}
+
+.input-box {
+  margin-bottom: 20px;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  background: #222;
+  color: #fff;
+  font-size: 1.2em;
+  transition: all 0.3s ease-in-out;
+}
+
+.input-box input:focus {
+  outline: none;
+  border: 1px solid #e50140;
+  background: #333;
+  transform: scale(1.03);
+  box-shadow: 0 0 10px rgba(229, 1, 64, 0.7);
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 5px;
+  background: #e50140;
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: #ff284b;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #e50140, 0 0 40px #ff284b;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Error Message */
+.error-message {
+  margin-bottom: 15px;
+  color: #ff4d4d;
+  font-size: 0.9em;
+}
+
+/* Links */
+.links {
+  margin-top: 20px;
+  font-size: 1em;
+}
+
+.links a {
+  color: #e50140;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.links a:hover {
+  color: #ff284b;
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .wrapper {
+    width: 95%;
+    height: auto;
+    padding: 20px;
   }
-  
+
   h2 {
     font-size: 2em;
-    text-align: center;
-    color: #fff;
-    margin-bottom: 20px;
-    transition: 0.5s;
   }
-  
-  .login-wrapper:hover h2 {
-    color: #e50140;
-  }
-  
-  .input-box {
-    position: relative;
-    width: 100%; /* Full width for container but restricted on inputs */
-    margin-bottom: 20px;
-  }
-  
-  .input-box label {
-    color: #fff;
-    margin-bottom: 5px;
-    display: block;
-    font-size: 1em;
-  }
-  
-  .input-box input {
-    width: 100%;
-    max-width: 350px; /* Max width to prevent stretching */
-    height: 40px;
-    background: transparent;
-    border: 2px solid #333;
-    outline: none;
-    border-radius: 5px;
-    font-size: 1em;
-    color: #e50140;
-    padding: 0 10px;
-    transition: 0.5s;
-    box-sizing: border-box; /* Ensure padding does not increase width */
-  }
-  
-  .login-wrapper:hover .input-box input {
-    border: 2px solid #e50140;
-    box-shadow: 0 0 10px #e50140, inset 0 0 10px #e50140;
-  }
-  
-  .input-box input::placeholder {
-    color: rgba(255, 255, 255, .3);
-  }
-  
-  button {
-    width: 100%;
-    max-width: 350px; /* Set a max width for the button */
-    height: 45px;
-    background: #333;
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: 500;
-    transition: 0.5s;
-  }
-  
-  .login-wrapper:hover button {
-    background: #e50140;
-    color: #000;
-    box-shadow: 0 0 20px #e50140;
-  }
-  
-  .register-link {
-    font-size: .9em;
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .register-link p {
-    color: #fff;
-  }
-  
-  .register-link p a {
-    color: #333;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.5s;
-  }
-  
-  .login-wrapper:hover .register-link p a {
-    color: #e50140;
-  }
-  
-  .register-link p a:hover {
-    text-decoration: underline;
-  }
-  
+}

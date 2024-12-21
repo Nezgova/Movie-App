@@ -1,9 +1,17 @@
 /* components/navbar.css */
 .navbar {
   background-color: #121212; /* Dark background */
-  padding: 10px;
-  text-align: center;
-  margin-top: 100px;
+  padding: 15px 0; /* Increased padding for a more spacious look */
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .navbar ul {
@@ -16,35 +24,82 @@
 }
 
 .navbar li {
-  margin: 0 15px;
+  margin: 0 25px; /* Increased space between items for a more spread-out look */
 }
 
 .navbar a {
   color: white;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bold;
-  transition: color 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  position: relative;
+  padding: 5px 0;
+  transition: all 0.4s ease;
+}
+
+.navbar a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background: #ff4747;
+  left: 0;
+  bottom: 0;
+  transition: width 0.4s ease;
+}
+
+.navbar a:hover::after {
+  width: 100%; /* Underline effect on hover */
 }
 
 .navbar a:hover {
-  color: #ff4747; /* Red color on hover */
+  color: #ff4747;
+  transform: scale(1.1); /* Slightly enlarge text on hover */
 }
 
-/* Logout button styles */
 .navbar .logout-button {
-  background-color: #ff4747; /* Red background */
+  background-color: #ff4747;
   color: white;
   border: none;
-  padding: 8px 20px;
+  padding: 12px 30px;
   font-size: 16px;
   font-weight: bold;
-  border-radius: 5px;
+  border-radius: 25px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.navbar .logout-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background: #e63939;
+  transition: all 0.4s ease;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  opacity: 0;
+}
+
+.navbar .logout-button:hover::before {
+  width: 0;
+  height: 0;
+  opacity: 1;
 }
 
 .navbar .logout-button:hover {
-  background-color: #e63939; /* Darker red on hover */
-  transform: scale(1.05); /* Slight scale effect on hover */
+  color: white;
+  transform: translateY(-3px); /* Slight lift effect */
+}
+
+.navbar .logout-button:hover {
+  background-color: #e63939;
+  box-shadow: 0 6px 12px rgba(255, 71, 71, 0.5); /* Glow effect */
 }

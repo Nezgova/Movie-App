@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import './register.css';
+import React, { useState } from "react";
+import axios from "axios";
+import "./register.css";
 const Register = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
+    username: "",
+    email: "",
+    password: "",
   });
 
   const handleChange = (e) => {
@@ -17,18 +17,33 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/register', formData);
+      const response = await axios.post(
+        "http://localhost:5000/register",
+        formData
+      );
       console.log(response.data);
-      alert('Registration successful, please log in!');
-      window.location.href = '/login'; 
+      alert("Registration successful, please log in!");
+      window.location.href = "/login";
     } catch (error) {
       console.error(error);
-      alert('Error registering user');
+      alert("Error registering user");
     }
   };
 
   return (
     <div className="wrapper">
+      <div className="particles">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div
+            key={i}
+            style={{
+              top: `${Math.random() * 100}vh`,
+              left: `${Math.random() * 100}vw`,
+              animationDelay: `${Math.random() * 5}s`,
+            }}
+          />
+        ))}
+      </div>
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <div className="input-box">
@@ -63,6 +78,11 @@ const Register = () => {
         </div>
         <button type="submit">Register</button>
       </form>
+      <div className="links">
+        <p>
+          Already have an account? <a href="/login">Sign in now</a>
+        </p>
+      </div>
     </div>
   );
 };

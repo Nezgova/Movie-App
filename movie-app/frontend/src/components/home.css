@@ -1,5 +1,5 @@
 .homepage {
-  margin-top: 0px;
+  margin-top: 20px;
   width: 120vh;
   height: 100vh;
   padding: 20px;
@@ -8,6 +8,7 @@
 
 /* Hero Section */
 .hero-section {
+  margin-top: 75px;
   position: relative;
   height: 50vh;
   background-size: cover;
@@ -37,7 +38,7 @@
   opacity: 1; /* Fade-in effect */
 }
 
-.hero-content h1 {
+.hero-content h1 {  
   font-size: 2.25rem;
   margin-bottom: 10px;
 }
@@ -88,7 +89,7 @@
 
 .content-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   padding: 20px;
 }

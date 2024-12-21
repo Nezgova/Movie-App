@@ -1,34 +1,44 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import Login from './components/login';
-import Register from './components/register';
-import HomePage from './components/home';
-import Movies from './components/movies';
-import MovieDetail from './components/MovieDetail';
-import WatchPage from './components/WatchPage';
-import SeriesPage from './components/series';
-import SerieDetail from './components/SerieDetail';
-import WatchPageSerie from './components/WatchPageSerie';
-import Navbar from './components/Navbar';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { useEffect, useState } from "react";
+import Login from "./components/login";
+import Register from "./components/register";
+import HomePage from "./components/home";
+import Movies from "./components/movies";
+import MovieDetail from "./components/MovieDetail";
+import WatchPage from "./components/WatchPage";
+import SeriesPage from "./components/series";
+import SerieDetail from "./components/SerieDetail";
+import WatchPageSerie from "./components/WatchPageSerie";
+import Navbar from "./components/Navbar";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Check authentication status on app load
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token); // Set to true if token exists
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsAuthenticated(true); // Set to true if token exists
+    } else {
+      setIsAuthenticated(false); // Otherwise, set to false
+    }
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     setIsAuthenticated(false);
   };
 
   return (
     <Router>
-      {isAuthenticated && <Navbar onLogout={handleLogout} />} {/* Show Navbar only if authenticated */}
+      {isAuthenticated && <Navbar onLogout={handleLogout} />}{" "}
+      {/* Show Navbar only if authenticated */}
       <Routes>
         {/* Public Routes */}
         <Route
@@ -74,7 +84,9 @@ const App = () => {
         />
         <Route
           path="/watchserie/:id/:season/:episode"
-          element={isAuthenticated ? <WatchPageSerie /> : <Navigate to="/login" />}
+          element={
+            isAuthenticated ? <WatchPageSerie /> : <Navigate to="/login" />
+          }
         />
       </Routes>
     </Router>
