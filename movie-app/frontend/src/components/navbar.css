@@ -1,31 +1,50 @@
 /* components/navbar.css */
 .navbar {
-    background-color: #121212; /* Dark background */
-    padding: 10px;
-    text-align: center;
-    margin-top: 100px;
-  }
-  
-  .navbar ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .navbar li {
-    margin: 0 15px;
-  }
-  
-  .navbar a {
-    color: white;
-    text-decoration: none;
-    font-size: 20px;
-    font-weight: bold;
-  }
-  
-  .navbar a:hover {
-    color: #ff4747; /* Red color on hover */
-  }
-  
+  background-color: #121212; /* Dark background */
+  padding: 10px;
+  text-align: center;
+  margin-top: 100px;
+}
+
+.navbar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar li {
+  margin: 0 15px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #ff4747; /* Red color on hover */
+}
+
+/* Logout button styles */
+.navbar .logout-button {
+  background-color: #ff4747; /* Red background */
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.navbar .logout-button:hover {
+  background-color: #e63939; /* Darker red on hover */
+  transform: scale(1.05); /* Slight scale effect on hover */
+}
