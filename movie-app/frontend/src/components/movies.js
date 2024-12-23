@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './movies.css';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./movies.css";
 
 const MoviePage = () => {
   const [moviesByGenre, setMoviesByGenre] = useState({});
   const [genres, setGenres] = useState([]);
   const [popularMovies, setPopularMovies] = useState([]);
   const [featuredIndex, setFeaturedIndex] = useState(0);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const apiKey = 'bfbc42cc51a737715f9ab554c951d6ad';
+  const apiKey = "bfbc42cc51a737715f9ab554c951d6ad";
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,25 +22,25 @@ const MoviePage = () => {
         const genreData = await genreResponse.json();
         setGenres(genreData.genres);
 
-        // Fetch popular movies
+        // Fetch popular movies, excluding adult content
         const popularResponse = await fetch(
-          `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`
+          `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&include_adult=false`
         );
         const popularData = await popularResponse.json();
         setPopularMovies(popularData.results);
 
-        // Fetch movies for each genre
+        // Fetch movies for each genre, excluding adult content
         const genreMovies = {};
         for (const genre of genreData.genres) {
           const genreMoviesResponse = await fetch(
-            `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genre.id}`
+            `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genre.id}&include_adult=false`
           );
           const genreMoviesData = await genreMoviesResponse.json();
           genreMovies[genre.name] = genreMoviesData.results;
         }
         setMoviesByGenre(genreMovies);
       } catch (error) {
-        console.error('Error fetching movies:', error);
+        console.error("Error fetching movies:", error);
       }
     };
 
@@ -65,16 +65,16 @@ const MoviePage = () => {
 
   // Handle search
   const handleSearch = async () => {
-    if (searchQuery.trim() === '') return;
+    if (searchQuery.trim() === "") return;
 
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}`
+        `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}&include_adult=false`
       );
       const data = await response.json();
       setSearchResults(data.results);
     } catch (error) {
-      console.error('Error searching movies:', error);
+      console.error("Error searching movies:", error);
     }
   };
 
@@ -85,8 +85,8 @@ const MoviePage = () => {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    card.style.setProperty('--x', `${x}px`);
-    card.style.setProperty('--y', `${y}px`);
+    card.style.setProperty("--x", `${x}px`);
+    card.style.setProperty("--y", `${y}px`);
   };
 
   const featuredMovie = popularMovies[featuredIndex];
@@ -114,7 +114,8 @@ const MoviePage = () => {
                 <i className="fas fa-chevron-left"></i> {/* Left Arrow Icon */}
               </button>
               <button onClick={nextFeaturedMovie}>
-                <i className="fas fa-chevron-right"></i> {/* Right Arrow Icon */}
+                <i className="fas fa-chevron-right"></i>{" "}
+                {/* Right Arrow Icon */}
               </button>
             </div>
           </div>
@@ -145,7 +146,7 @@ const MoviePage = () => {
                 onClick={() => handleMovieClick(movie.id)}
               >
                 <div
-                  className="card-poster"
+                  className="movie-poster"
                   style={{
                     backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.poster_path})`,
                   }}
@@ -171,7 +172,7 @@ const MoviePage = () => {
                   onClick={() => handleMovieClick(movie.id)}
                 >
                   <div
-                    className="card-poster"
+                    className="movie-poster"
                     style={{
                       backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.poster_path})`,
                     }}

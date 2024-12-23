@@ -127,7 +127,7 @@ body {
   box-shadow: 0 8px 16px rgba(255, 0, 0, 0.3); /* Glowing red effect */
 }
 
-.card-poster {
+.movie-poster {
   height: 350px;
   background-size: cover;
   background-position: center;

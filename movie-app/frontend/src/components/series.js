@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './series.css';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./series.css";
 
 const SeriesPage = () => {
   const [seriesByGenre, setSeriesByGenre] = useState({});
   const [genres, setGenres] = useState([]);
   const [trendingSeries, setTrendingSeries] = useState([]);
   const [featuredIndex, setFeaturedIndex] = useState(0);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const apiKey = 'bfbc42cc51a737715f9ab554c951d6ad';
+  const apiKey = "bfbc42cc51a737715f9ab554c951d6ad";
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,25 +22,25 @@ const SeriesPage = () => {
         const genreData = await genreResponse.json();
         setGenres(genreData.genres);
 
-        // Fetch trending TV series
+        // Fetch trending TV series, excluding adult content
         const trendingResponse = await fetch(
-          `https://api.themoviedb.org/3/trending/tv/day?api_key=${apiKey}`
+          `https://api.themoviedb.org/3/trending/tv/day?api_key=${apiKey}&include_adult=false`
         );
         const trendingData = await trendingResponse.json();
         setTrendingSeries(trendingData.results);
 
-        // Fetch TV series for each genre
+        // Fetch TV series for each genre, excluding adult content
         const genreSeries = {};
         for (const genre of genreData.genres) {
           const genreSeriesResponse = await fetch(
-            `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&with_genres=${genre.id}`
+            `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&with_genres=${genre.id}&include_adult=false`
           );
           const genreSeriesData = await genreSeriesResponse.json();
           genreSeries[genre.name] = genreSeriesData.results;
         }
         setSeriesByGenre(genreSeries);
       } catch (error) {
-        console.error('Error fetching series:', error);
+        console.error("Error fetching series:", error);
       }
     };
 
@@ -65,16 +65,16 @@ const SeriesPage = () => {
 
   // Handle search
   const handleSearch = async () => {
-    if (searchQuery.trim() === '') return;
+    if (searchQuery.trim() === "") return;
 
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${searchQuery}`
+        `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${searchQuery}&include_adult=false`
       );
       const data = await response.json();
       setSearchResults(data.results);
     } catch (error) {
-      console.error('Error searching series:', error);
+      console.error("Error searching series:", error);
     }
   };
 
@@ -85,8 +85,8 @@ const SeriesPage = () => {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    card.style.setProperty('--x', `${x}px`);
-    card.style.setProperty('--y', `${y}px`);
+    card.style.setProperty("--x", `${x}px`);
+    card.style.setProperty("--y", `${y}px`);
   };
 
   const featuredSeries = trendingSeries[featuredIndex];
@@ -114,7 +114,8 @@ const SeriesPage = () => {
                 <i className="fas fa-chevron-left"></i> {/* Left Arrow Icon */}
               </button>
               <button onClick={nextFeaturedSeries}>
-                <i className="fas fa-chevron-right"></i> {/* Right Arrow Icon */}
+                <i className="fas fa-chevron-right"></i>{" "}
+                {/* Right Arrow Icon */}
               </button>
             </div>
           </div>
@@ -136,10 +137,10 @@ const SeriesPage = () => {
       {searchResults.length > 0 && (
         <div className="search-results">
           <h2>Search Results</h2>
-          <div className="movie-grid">
+          <div className="series-grid">
             {searchResults.map((series) => (
               <div
-                className="movie-card"
+                className="series-card"
                 key={series.id}
                 onMouseMove={handleMouseMove}
                 onClick={() => handleSeriesClick(series.id)}
@@ -161,11 +162,11 @@ const SeriesPage = () => {
       {searchResults.length === 0 && genres.length > 0 && (
         <>
           {genres.map((genre) => (
-            <div className="movie-grid" key={genre.id}>
+            <div className="series-grid" key={genre.id}>
               <h2>{genre.name} Series</h2>
               {seriesByGenre[genre.name]?.map((series) => (
                 <div
-                  className="movie-card"
+                  className="series-card"
                   key={series.id}
                   onMouseMove={handleMouseMove}
                   onClick={() => handleSeriesClick(series.id)}

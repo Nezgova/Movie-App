@@ -80,7 +80,7 @@
 
 .search-bar button {
   padding: 10px;
-  background: #007bff;
+  background: #ff4747;
   color: white;
   border: none;
   border-radius: 0 5px 5px 0;
@@ -108,7 +108,7 @@
 }
 
 .card-poster {
-  height: 200px;
+  height: 350px;
   background-size: cover;
   background-position: center;
   transition: transform 0.3s ease-in-out; /* Ensure poster image transitions smoothly */
@@ -119,7 +119,7 @@
 }
 
 .view-more-btn {
-  background: rgba(255, 78, 78, 0.8);
+  background: rgba(245, 26, 26, 0.8);
   color: white;
   border: none;
   padding: 10px 20px;
