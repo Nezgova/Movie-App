@@ -5,6 +5,7 @@
     "client": "npm run start --prefix frontend"
   },
   "dependencies": {
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "swiper": "^11.1.15"
   }
 }

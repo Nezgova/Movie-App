@@ -5,7 +5,6 @@ import "./home.css";
 const HomePage = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [trendingSeries, setTrendingSeries] = useState([]);
-  const [featuredIndex, setFeaturedIndex] = useState(0); // Index for hero content
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const apiKey = "bfbc42cc51a737715f9ab554c951d6ad";
@@ -36,19 +35,6 @@ const HomePage = () => {
   // Combine movies and series for the hero section
   const heroContent = [...trendingMovies, ...trendingSeries];
 
-  // Handle arrow navigation in the hero section
-  const handleArrowClick = (direction) => {
-    if (direction === "left") {
-      setFeaturedIndex((prevIndex) =>
-        prevIndex === 0 ? heroContent.length - 1 : prevIndex - 1
-      );
-    } else {
-      setFeaturedIndex((prevIndex) =>
-        prevIndex === heroContent.length - 1 ? 0 : prevIndex + 1
-      );
-    }
-  };
-
   // Handle navigation to detail pages
   const handleContentClick = (id, type) => {
     const route = type === "movie" ? `/movie/${id}` : `/seriedetail/${id}`;
@@ -74,42 +60,29 @@ const HomePage = () => {
     <div className="homepage">
       {/* Hero Section */}
       {heroContent.length > 0 && (
-        <div
-          className="hero-section"
-          style={{
-            backgroundImage: `url(https://image.tmdb.org/t/p/original${heroContent[featuredIndex]?.backdrop_path})`,
-          }}
-        >
-          <div className="hero-content">
-            <h1>
-              {heroContent[featuredIndex]?.title ||
-                heroContent[featuredIndex]?.name}
-            </h1>
-            <p>{heroContent[featuredIndex]?.overview}</p>
-            <button
-              onClick={() =>
-                handleContentClick(
-                  heroContent[featuredIndex]?.id,
-                  heroContent[featuredIndex]?.media_type || "movie"
-                )
-              }
+        <div className="hero-section">
+          <div className="hero-wrapper">
+            {heroContent.map((content, index) => (
+              <div className="hero-slide"
+              key={index}
+              style={{
+                backgroundImage: `url(https://image.tmdb.org/t/p/original${content.backdrop_path})`,
+              }}
             >
-              Watch Now
-            </button>
-            <div className="hero-navigation">
-              <button
-                className="arrow left-arrow"
-                onClick={() => handleArrowClick("left")}
-              >
-                &#9664;
-              </button>
-              <button
-                className="arrow right-arrow"
-                onClick={() => handleArrowClick("right")}
-              >
-                &#9654;
-              </button>
+              <div className="hero-content">
+                <h1>{content.title || content.name}</h1>
+                <p>{content.overview}</p>
+                <button
+                  onClick={() =>
+                    handleContentClick(content.id, content.media_type || "movie")
+                  }
+                >
+                  Watch Now
+                </button>
+              </div>
             </div>
+            
+            ))}
           </div>
         </div>
       )}

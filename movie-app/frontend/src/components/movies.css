@@ -19,50 +19,96 @@ body {
 
 /* Hero Section */
 .hero-section {
+  border-radius: 30px;
+  margin-top: 100px;
   position: relative;
-  height: 400px;
+  width: 95vw;
+  min-height: 820px;
   background-size: cover;
   background-position: center;
-  color: white;
-  padding: 20px;
+  background-color: #ff2626;
   display: flex;
-  justify-content: center;
   align-items: center;
-  text-align: center;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  justify-content: center;
+  padding: 0;
+  color: #fff;
+  overflow: hidden;
 }
 
-.hero-content {
-  z-index: 2;
+/* Wrapper for sliding content */
+.hero-wrapper {
+  display: flex;
+  width: 100%;
+  scroll-snap-type: x mandatory;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.hero-description {
+.hero-wrapper::-webkit-scrollbar {
   display: none;
-  transition: opacity 0.3s ease-in-out;
 }
 
-/* Show description on hover */
-.hero-section:hover .hero-description {
-  display: block;
+/* Hero slide styles */
+.hero-slide {
+  flex-shrink: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  scroll-snap-align: center;
+}
+
+/* Hero content inside each slide */
+.hero-content {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  bottom: 0;
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
+  padding-bottom: 100px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.hero-slide:hover .hero-content {
   opacity: 1;
+  visibility: visible;
 }
 
-.hero-navigation button {
-  background-color: rgba(255, 0, 0, 0.7); /* Glowing red background */
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.hero-content button {
+  background-color: #ff4747;
   color: white;
-  padding: 15px;
   border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
   cursor: pointer;
-  margin: 5px;
-  font-size: 20px;
-  border-radius: 50%; /* Round buttons */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s ease-in-out;
 }
 
-.hero-navigation button:hover {
-  background-color: rgba(255, 0, 0, 1); /* Bright red */
-  box-shadow: 0 0 15px rgba(255, 0, 0, 0.8); /* Glowing effect */
+.hero-content button:hover {
+  background-color: #ff2626;
 }
 
 /* Search Bar */
@@ -127,7 +173,7 @@ body {
   box-shadow: 0 8px 16px rgba(255, 0, 0, 0.3); /* Glowing red effect */
 }
 
-.movie-poster {
+.card-poster {
   height: 350px;
   background-size: cover;
   background-position: center;

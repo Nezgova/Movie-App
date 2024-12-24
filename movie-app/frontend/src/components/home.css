@@ -1,46 +1,94 @@
+/* Global reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Homepage */
 .homepage {
-  margin-top: 20px;
-  width: 120vh;
-  height: 100vh;
-  padding: 20px;
-  overflow: auto;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* Hero Section */
 .hero-section {
-  margin-top: 75px;
+  border-radius: 30px;
+  margin-top: 100px;
   position: relative;
-  height: 50vh;
-  background-size: cover;
-  background-position: center;
+  width: 95vw;               /* Height of the hero section */
+  min-height: 820px;         /* Minimum height to ensure it's tall enough */
+  background-size: cover;    /* Ensure background image covers the entire section */
+  background-position: center; /* Center background image */
+  background-color: #ff2626;  /* Fallback background color */
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  padding: 20px;
+  align-items: center;       /* Vertically center content */
+  justify-content: center;   /* Horizontally center content */
+  padding: 0;                /* Remove padding to ensure image covers the full section */
   color: #fff;
-  overflow: hidden;
+  overflow: hidden;          /* Hide both vertical and horizontal scrollbars */
 }
 
+/* Wrapper for sliding content */
+.hero-wrapper {
+  display: flex;
+  width: 100%;             /* Ensure it fills the entire hero section */
+  scroll-snap-type: x mandatory;  /* Enforces snapping to each slide */
+  overflow-x: auto;               /* Horizontal scrolling */
+  scroll-behavior: smooth;        /* Smooth scrolling */
+  scrollbar-width: none;          /* Firefox: Hides scrollbar */
+  -ms-overflow-style: none;       /* Internet Explorer: Hides scrollbar */
+}
+
+.hero-wrapper::-webkit-scrollbar {
+  display: none;                  /* Chrome/Safari: Hides scrollbar */
+}
+
+
+/* Hero slide styles */
+.hero-slide {
+  flex-shrink: 0;
+  width: 100vw;                /* Each slide takes up full viewport width */
+  height: 100vh;               /* Full height of the hero section */
+  background-size: cover;      /* Ensure background covers the slide */
+  background-position: center; /* Center background image */
+  display: flex;
+  align-items: center;         /* Vertically center content */
+  justify-content: center;     /* Horizontally center content */
+  position: relative;
+  scroll-snap-align: center;   /* Ensure slide is centered when snapped */
+}
+
+/* Hero content inside each slide */
 .hero-content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  position: absolute;          /* Keep it positioned relative to the parent */
   background: rgba(0, 0, 0, 0.7); /* Dark overlay for better contrast */
-  width: 100%;
-  padding: 20px;
-  transform: translateY(100%);
-  transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
-  opacity: 0; /* Hidden initially */
+  width: 100%;                 /* Make it span the full width of the hero section */
+  bottom: 0;                   /* Position it at the bottom of the hero section */
+  padding: 20px;               /* Adjust padding for spacing */
+  text-align: center;          /* Center-align text */
+  color: #fff;                 /* Text color for better readability */
+  box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+  padding-bottom: 100px;
+  opacity: 0;                  /* Initially hidden */
+  visibility: hidden;          /* Initially not visible */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.hero-section:hover .hero-content {
-  transform: translateY(0); /* Slide-up effect */
-  opacity: 1; /* Fade-in effect */
+.hero-slide:hover .hero-content {
+  opacity: 1;                  /* Fully visible on hover */
+  visibility: visible;         /* Make it visible */
 }
 
-.hero-content h1 {  
-  font-size: 2.25rem;
-  margin-bottom: 10px;
+.hero-content h1 {
+  font-size: 2.5rem; /* Adjust size for emphasis */
+  margin-bottom: 15px;
 }
 
 .hero-content p {
@@ -54,7 +102,6 @@
   color: white;
   border: none;
   padding: 10px 20px;
-  margin: 1rem;
   font-size: 1rem;
   border-radius: 5px;
   cursor: pointer;
@@ -65,17 +112,22 @@
   background-color: #ff2626;
 }
 
+/* Search Bar */
 .search-bar {
   display: flex;
   justify-content: center;
   margin: 20px 0;
+  width: 80vw;
+  max-width: 800px;
+  gap: 10px;
 }
 
 .search-bar input {
-  width: 60%;
+  flex: 1;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px 0 0 5px;
+  font-size: 1rem;
 }
 
 .search-bar button {
@@ -85,48 +137,55 @@
   border: none;
   border-radius: 0 5px 5px 0;
   cursor: pointer;
+  font-size: 1rem;
 }
 
+/* Content Grid */
 .content-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
   padding: 20px;
+  width: 100vw;
 }
 
+/* Content Card */
 .content-card {
   cursor: pointer;
   position: relative;
   overflow: hidden;
   border-radius: 10px;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Add smooth transition for shadow and scaling */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .content-card:hover {
-  transform: scale(1.05); /* Scale up the card a little */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Add shadow on hover for depth */
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .card-poster {
-  height: 350px;
+  height: 300px;
   background-size: cover;
   background-position: center;
-  transition: transform 0.3s ease-in-out; /* Ensure poster image transitions smoothly */
+  transition: transform 0.3s ease-in-out;
 }
 
 .content-card:hover .card-poster {
-  transform: scale(1.1); /* Slightly zoom in the poster on hover */
+  transform: scale(1.1);
 }
 
+/* View More Button */
 .view-more-btn {
   background: rgba(245, 26, 26, 0.8);
   color: white;
   border: none;
   padding: 10px 20px;
-  margin: 10px 35%;
+  margin: 20px auto;
   cursor: pointer;
+  display: block;
+  text-align: center;
 }
 
-.view-more-btn:hover{
-  background-color:rgba(255, 0, 0, 0.8);
+.view-more-btn:hover {
+  background-color: rgba(255, 0, 0, 0.8);
 }
