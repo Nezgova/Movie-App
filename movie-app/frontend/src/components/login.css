@@ -63,7 +63,7 @@ body, html {
   width: 30rem;
   height: 80vh;
   padding: 40px;
-  background: rgba(0, 0, 0, 0.85);
+  background: #12151c;
   border-radius: 10px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
   text-align: center;
