@@ -1,18 +1,23 @@
+/* Global Reset */
 * {
-    box-sizing: border-box; /* Include padding and border in width/height */
-    margin: 0; /* Reset default margins */
-    padding: 0; /* Reset default padding */
-  }
-  
-  html, body {
-    height: 100%; /* Ensure full height */
-    width: 100%;  /* Ensure full width */
-  }
-  
-  #root { /* This is the container where React renders */
-    width: 100vw; /* Full screen width */
-    height: 100vh; /* Full screen height */
-    display: flex; /* Ensure children can fill full height */
-    flex-direction: column; /* Layout children in a column */
-  }
-  
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Body and Root Styles */
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+}

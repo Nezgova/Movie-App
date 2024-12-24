@@ -4,69 +4,81 @@
 .movie-detail {
   background-color: #121212; /* Dark background */
   color: white;
-  margin-top: 200px;
-  width: 120vh;
+  margin: 50px auto;
+  margin-top: 10vh; /* Centered with auto margin */
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   font-family: 'Arial', sans-serif; /* Default font */
+  max-width: 900px; /* Limit the width for better layout */
+  width: 100%; /* Full width up to the max-width */
 }
 
+/* Movie Title */
 .movie-detail h1 {
   text-align: center;
-  font-size: 48px;
+  font-size: 36px; /* Slightly smaller font */
   text-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Glowing red text */
+  margin-bottom: 20px; /* Space under the title */
 }
 
+/* Movie Info Section */
 .movie-info {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: flex-start;
   margin-top: 20px;
+  gap: 20px; /* Space between poster and description */
+  flex-wrap: wrap; /* Allow wrapping on small screens */
 }
 
 .movie-poster {
-  width: 250px;
+  width: 180px; /* Smaller poster size */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .movie-description {
-  width: 60%;
+  width: 100%;
+  max-width: 500px; /* Limit description width */
   padding: 20px;
+  font-size: 16px; /* Slightly smaller font */
 }
 
 .movie-description p {
-  font-size: 18px;
   line-height: 1.6;
 }
 
 .movie-rating {
   margin-top: 10px;
-  font-size: 20px;
+  font-size: 18px;
   color: #ff4747; /* Red color for rating */
 }
 
 /* Cast Section */
 .movie-cast {
   margin-top: 40px;
+  text-align: center;
 }
 
 .cast-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 20px;
 }
 
 .cast-member,
 .director-info {
   text-align: center;
   margin: 10px;
+  max-width: 120px; /* Limit width for each cast member */
 }
 
 .actor-photo,
 .director-photo {
-  width: 100px;
-  height: 100px;
+  width: 80px; /* Smaller actor photos */
+  height: 80px; /* Smaller actor photos */
   border-radius: 50%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
@@ -74,8 +86,10 @@
 .cast-member p,
 .director-info p {
   margin-top: 5px;
+  font-size: 14px; /* Smaller text for names and characters */
 }
 
+/* Watch Now Button */
 .watch-button {
   background-color: #ff4747; /* Red background */
   color: white;
@@ -85,6 +99,8 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  display: block;
+  margin: 20px auto 0; /* Center button horizontally */
 }
 
 .watch-button:hover {
