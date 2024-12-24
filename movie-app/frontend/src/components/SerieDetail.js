@@ -7,6 +7,8 @@ const SerieDetailPage = () => {
   const [serie, setSerie] = useState(null);
   const [cast, setCast] = useState([]);
   const [crew, setCrew] = useState([]);
+  const [selectedSeason, setSelectedSeason] = useState(1); // Set default season to 1
+  const [selectedEpisode, setSelectedEpisode] = useState(1); // Set default episode to 1
   const apiKey = 'bfbc42cc51a737715f9ab554c951d6ad'; // TMDB API key
 
   // Fetch series details by ID
@@ -33,6 +35,16 @@ const SerieDetailPage = () => {
   if (!serie) return <p>Loading series details...</p>;
 
   const serieRating = serie.vote_average;
+
+  // Handle season change
+  const handleSeasonChange = (e) => {
+    setSelectedSeason(parseInt(e.target.value)); // Update selected season
+  };
+
+  // Handle episode change
+  const handleEpisodeChange = (e) => {
+    setSelectedEpisode(parseInt(e.target.value)); // Update selected episode
+  };
 
   return (
     <div className="serie-detail">
@@ -84,7 +96,29 @@ const SerieDetailPage = () => {
         )) : <p>No director information available.</p>}
       </div>
 
-      <Link to={`/watch/${id}`}>
+      {/* Season and Episode Selection */}
+      <div className="season-episode-selector">
+        <h3>Select Season:</h3>
+        <select value={selectedSeason} onChange={handleSeasonChange}>
+          {[...Array(serie.number_of_seasons)].map((_, index) => (
+            <option key={index + 1} value={index + 1}>
+              Season {index + 1}
+            </option>
+          ))}
+        </select>
+
+        <h3>Select Episode:</h3>
+        <select value={selectedEpisode} onChange={handleEpisodeChange}>
+          {[...Array(serie.number_of_episodes)].map((_, index) => (
+            <option key={index + 1} value={index + 1}>
+              Episode {index + 1}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Watch Now Button */}
+      <Link to={`/watchserie/${id}/${selectedSeason}/${selectedEpisode}`}>
         <button className="watch-button">Watch Now</button>
       </Link>
     </div>
