@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./ContentCard.css";
 
-const ContentCard = ({ id, title, image, mediaType, onClick }) => {
+const ContentCard = ({ id, title, image, mediaType, onClick, onFavoriteClick }) => {
   useEffect(() => {
     const card = document.querySelector(`#card-${id}`);
 
@@ -32,6 +32,15 @@ const ContentCard = ({ id, title, image, mediaType, onClick }) => {
       <div id={`card-${id}`} className="content-card">
         <div className="card-poster">
           <img src={image} alt={title} />
+          <button
+            className="fav-btn"
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent triggering the card's onClick
+              onFavoriteClick(id);
+            }}
+          >
+            +
+          </button>
         </div>
       </div>
       <h3 className="card-title">{title}</h3>

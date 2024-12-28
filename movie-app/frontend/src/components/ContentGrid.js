@@ -12,9 +12,10 @@ const ContentGrid = ({ content, onClick }) => {
           title={item.title || item.name}
           image={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
           mediaType={item.media_type || "movie"} // Determine the media type (movie or tv)
-          onClick={onClick}
+          onClick={onClick} 
         />
       ))}
+
     </div>
   );
 };
