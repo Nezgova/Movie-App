@@ -17,10 +17,8 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/register",
-        formData
-      );
+      const response = await axios.post("http://localhost:5000/api/auth/register", formData);
+
       console.log(response.data);
       alert("Registration successful, please log in!");
       window.location.href = "/login";
