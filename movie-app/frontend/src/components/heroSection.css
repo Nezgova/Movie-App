@@ -1,96 +1,111 @@
-/* Hero Section */
 .hero-section {
-    border-radius: 30px;
-    margin-top: 100px;
-    position: relative;
-    width: 95vw;
-    min-height: 820px;
-    background-size: cover;
-    background-position: center;
-    background-color: #ff2626;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    color: #fff;
-    overflow: hidden;
-  }
-  
-  /* Wrapper for sliding content */
-  .hero-wrapper {
-    display: flex;
-    width: 100%;
-    scroll-snap-type: x mandatory;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  
-  .hero-wrapper::-webkit-scrollbar {
-    display: none;
-  }
-  
-  /* Hero slide styles */
-  .hero-slide {
-    flex-shrink: 0;
-    width: 100vw;
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    scroll-snap-align: center;
-  }
-  
-  /* Hero content inside each slide */
-  .hero-content {
-    position: absolute;
-    background: rgba(0, 0, 0, 0.7);
-    width: 100%;
-    bottom: 0;
-    padding: 20px;
-    text-align: center;
-    color: #fff;
-    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
-    padding-bottom: 100px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-  }
-  
-  .hero-slide:hover .hero-content {
-    opacity: 1;
-    visibility: visible;
-  }
-  
-  .hero-content h1 {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-  }
-  
-  .hero-content p {
-    font-size: 1.2rem;
-    line-height: 1.5;
-    margin-bottom: 20px;
-  }
-  
-  .hero-content button {
-    background-color: #ff4747;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-  }
-  
-  .hero-content button:hover {
-    background-color: #ff2626;
-  }
-  
-  
-  
+  border-radius: 30px;
+  margin-top: 100px;
+  position: relative;
+  width: 95vw;
+  min-height: 820px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: #fff;
+  overflow: hidden;
+}
+
+.hero-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.hero-slide {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.hero-content {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  bottom: 0;
+  padding: 40px 20px;
+  color: #fff;
+  box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.hero-content-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.hero-content button {
+  background-color: #ff4747;
+  color: white;
+  border: none;
+  padding: 12px 32px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.hero-content button:hover {
+  background-color: #ff2626;
+  transform: scale(1.05);
+}
+
+/* Navigation dots */
+.hero-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.hero-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hero-dot.active {
+  width: 32px;
+  border-radius: 6px;
+  background-color: #ff4747;
+}
+
+.hero-dot:hover:not(.active) {
+  background-color: rgba(255, 255, 255, 0.8);
+}
