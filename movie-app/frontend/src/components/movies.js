@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./movies.css";
 import HeroSection from "./HeroSection";
 import SearchBar from "./SearchBar";
-import ContentGrid from "./ContentGrid"; // Import ContentGrid component
+import ContentGrid from "./ContentGrid";
 
 const MoviePage = () => {
   const [moviesByGenre, setMoviesByGenre] = useState({});
@@ -11,6 +11,7 @@ const MoviePage = () => {
   const [popularMovies, setPopularMovies] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState("");
   const apiKey = "bfbc42cc51a737715f9ab554c951d6ad";
   const navigate = useNavigate();
 
@@ -31,7 +32,7 @@ const MoviePage = () => {
         const popularData = await popularResponse.json();
         setPopularMovies(popularData.results);
 
-        // Fetch genre-based movies
+        // Fetch movies by genre
         const genreMovies = {};
         for (const genre of genreData.genres) {
           const genreMoviesResponse = await fetch(
@@ -57,9 +58,11 @@ const MoviePage = () => {
     if (searchQuery.trim() === "") return;
 
     try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}`
-      );
+      let searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}`;
+      if (selectedGenre) {
+        searchUrl += `&with_genres=${selectedGenre}`;
+      }
+      const response = await fetch(searchUrl);
       const data = await response.json();
       setSearchResults(data.results);
     } catch (error) {
@@ -67,11 +70,15 @@ const MoviePage = () => {
     }
   };
 
+  const filteredGenres = selectedGenre 
+    ? genres.filter(genre => genre.id === parseInt(selectedGenre))
+    : genres;
+
   return (
     <div className="moviespage">
       <HeroSection
         heroContent={popularMovies}
-        onContentClick={(id) => handleMovieClick(id)}
+        onContentClick={handleMovieClick}
         mediaType="movie"
       />
 
@@ -79,29 +86,26 @@ const MoviePage = () => {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         handleSearch={handleSearch}
+        genres={genres}
+        selectedGenre={selectedGenre}
+        setSelectedGenre={setSelectedGenre}
       />
 
-      {/* Search Results */}
       {searchResults.length > 0 ? (
         <div className="search-results">
           <h2>Search Results</h2>
           <ContentGrid content={searchResults} onClick={handleMovieClick} />
         </div>
       ) : (
-        // Genre-Based Sections (only show if no search results)
-        Object.keys(moviesByGenre).length > 0 ? (
-          genres.map((genre) => (
-            <div key={genre.id}>
-              <h2>{genre.name} Movies</h2>
-              <ContentGrid
-                content={moviesByGenre[genre.name] || []}
-                onClick={handleMovieClick}
-              />
-            </div>
-          ))
-        ) : (
-          <p>Loading genres...</p>
-        )
+        filteredGenres.map((genre) => (
+          <div key={genre.id} className="genre-section">
+            <h2>{genre.name} Movies</h2>
+            <ContentGrid
+              content={moviesByGenre[genre.name] || []}
+              onClick={handleMovieClick}
+            />
+          </div>
+        ))
       )}
     </div>
   );
