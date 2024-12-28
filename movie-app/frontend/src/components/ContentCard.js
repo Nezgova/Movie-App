@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import "./ContentCard.css";
 import { useFavorites } from "./FavoritesContext";
 
-const ContentCard = ({ id, title, image, mediaType, onClick }) => {
+const ContentCard = ({ id, title, image, mediaType, onClick, isProfilePage, onRemoveFavorite }) => {
   const cardRef = useRef(null);
   const { favoriteContent, setFavoriteContent } = useFavorites();
 
@@ -25,12 +25,16 @@ const ContentCard = ({ id, title, image, mediaType, onClick }) => {
 
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
-    const isAlreadyFavorite = favoriteContent.some((item) => item.id === id);
-    if (!isAlreadyFavorite) {
-      setFavoriteContent([
-        ...favoriteContent,
-        { id, title, image, mediaType: mediaType || "movie" },
-      ]);
+    if (isProfilePage) {
+      onRemoveFavorite(id);
+    } else {
+      const isAlreadyFavorite = favoriteContent.some((item) => item.id === id);
+      if (!isAlreadyFavorite) {
+        setFavoriteContent([
+          ...favoriteContent,
+          { id, title, image, mediaType: mediaType || "movie" },
+        ]);
+      }
     }
   };
 
@@ -42,8 +46,11 @@ const ContentCard = ({ id, title, image, mediaType, onClick }) => {
             src={image || `https://via.placeholder.com/500x750?text=No+Image`}
             alt={title}
           />
-          <button className="fav-btn" onClick={handleFavoriteClick}>
-            +
+          <button 
+            className={`fav-btn ${isProfilePage ? 'remove-btn' : ''}`} 
+            onClick={handleFavoriteClick}
+          >
+            {isProfilePage ? '−' : '+'}
           </button>
         </div>
       </div>

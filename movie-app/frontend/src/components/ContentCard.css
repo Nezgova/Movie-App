@@ -111,3 +111,12 @@
 .content-card:hover .fav-btn {
   display: flex;
 }
+.fav-btn.remove-btn {
+  background-color: rgba(255, 0, 0, 0.8);
+  color: white;
+}
+
+.fav-btn.remove-btn:hover {
+  background-color: rgba(255, 0, 0, 1);
+  transform: scale(1.1);
+}

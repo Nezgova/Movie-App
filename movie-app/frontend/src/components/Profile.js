@@ -5,20 +5,24 @@ import ContentGrid from "./ContentGrid";
 import "./Profile.css";
 
 const ProfilePage = () => {
-  const { favoriteContent } = useFavorites();
+  const { favoriteContent, setFavoriteContent } = useFavorites();
   const navigate = useNavigate();
 
   const favoriteMovies = favoriteContent.filter((item) => item.mediaType === "movie");
   const favoriteSeries = favoriteContent.filter((item) => item.mediaType === "tv");
 
   const handleContentClick = (id, mediaType) => {
-    // Use the mediaType from the content item to determine the route
     const route = mediaType === "tv" ? `/seriedetail/${id}` : `/movie/${id}`;
     navigate(route);
   };
 
+  const handleRemoveFavorite = (id) => {
+    setFavoriteContent(favoriteContent.filter(item => item.id !== id));
+  };
+
   return (
     <div className="profile-page">
+  
       <h1>Your Favorites</h1>
 
       <div className="favorites-section">
@@ -28,9 +32,11 @@ const ProfilePage = () => {
             content={favoriteMovies.map((item) => ({
               ...item,
               poster_path: item.image.replace("https://image.tmdb.org/t/p/w500", ""),
-              media_type: "movie"  // Explicitly set media_type to match API format
+              media_type: "movie"
             }))}
             onClick={handleContentClick}
+            isProfilePage={true}
+            onRemoveFavorite={handleRemoveFavorite}
           />
         ) : (
           <p>No favorite movies yet!</p>
@@ -44,9 +50,11 @@ const ProfilePage = () => {
             content={favoriteSeries.map((item) => ({
               ...item,
               poster_path: item.image.replace("https://image.tmdb.org/t/p/w500", ""),
-              media_type: "tv"  // Explicitly set media_type to match API format
+              media_type: "tv"
             }))}
             onClick={handleContentClick}
+            isProfilePage={true}
+            onRemoveFavorite={handleRemoveFavorite}
           />
         ) : (
           <p>No favorite series yet!</p>
