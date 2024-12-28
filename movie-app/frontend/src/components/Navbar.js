@@ -17,7 +17,7 @@ const Navbar = ({ onLogout }) => {
             <Link to="/series">Series</Link>
           </li>
           <li>
-            <Link to="/profile">Profile</Link>
+            <Link to="/Profile">Profile</Link>
           </li>
           <li>
             <button onClick={onLogout} className="logout-button">

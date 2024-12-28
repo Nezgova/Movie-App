@@ -1,0 +1,54 @@
+.profile-page {
+    padding: 20px;
+    color: #fff;
+    background-color: #1a1a1a; /* Match the theme of the app */
+    min-height: 100vh;
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile-header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Glowing text effect */
+}
+
+.profile-header p {
+    font-size: 1.2rem;
+    color: #bbb;
+}
+
+/* Ensure ContentGrid aligns properly */
+.content-grid {
+    justify-content: center; /* Center grid items on the page */
+}
+
+.empty-placeholder {
+    text-align: center;
+    color: #bbb;
+    margin-top: 50px;
+}
+
+.empty-placeholder p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+/* Responsive styles for different screen sizes */
+@media (max-width: 768px) {
+    .profile-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .profile-header p {
+        font-size: 1rem;
+    }
+
+    .empty-placeholder p {
+        font-size: 1rem;
+    }
+}

@@ -1,44 +1,24 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./ContentCard.css";
+import { useFavorites } from "./FavoritesContext";
 
-const ContentCard = ({ id, title, image, mediaType, onClick, onFavoriteClick }) => {
-  useEffect(() => {
-    const card = document.querySelector(`#card-${id}`);
+const ContentCard = ({ id, title, image, mediaType, onClick }) => {
+  const { favoriteContent, setFavoriteContent } = useFavorites();
 
-    const handleMouseMove = (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      card.style.setProperty("--x", `${x}px`);
-      card.style.setProperty("--y", `${y}px`);
-    };
-
-    // Add the mousemove event listener
-    if (card) {
-      card.addEventListener("mousemove", handleMouseMove);
+  const handleFavoriteClick = (e) => {
+    e.stopPropagation(); // Prevent triggering the card's onClick
+    const isAlreadyFavorite = favoriteContent.some((item) => item.id === id);
+    if (!isAlreadyFavorite) {
+      setFavoriteContent([...favoriteContent, { id, title, image, mediaType }]);
     }
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      if (card) {
-        card.removeEventListener("mousemove", handleMouseMove);
-      }
-    };
-  }, [id]);
+  };
 
   return (
     <div className="content-card-container" onClick={() => onClick(id, mediaType)}>
       <div id={`card-${id}`} className="content-card">
         <div className="card-poster">
           <img src={image} alt={title} />
-          <button
-            className="fav-btn"
-            onClick={(e) => {
-              e.stopPropagation(); // Prevent triggering the card's onClick
-              onFavoriteClick(id);
-            }}
-          >
+          <button className="fav-btn" onClick={handleFavoriteClick}>
             +
           </button>
         </div>
