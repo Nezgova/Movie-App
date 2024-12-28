@@ -24,11 +24,7 @@ const App = () => {
   // Check authentication status on app load
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      setIsAuthenticated(true); // Set to true if token exists
-    } else {
-      setIsAuthenticated(false); // Otherwise, set to false
-    }
+    setIsAuthenticated(!!token); // Set authentication status based on token
   }, []);
 
   const handleLogout = () => {
@@ -54,7 +50,6 @@ const App = () => {
               )
             }
           />
-
           <Route
             path="/register"
             element={isAuthenticated ? <Navigate to="/" /> : <Register />}
@@ -71,9 +66,7 @@ const App = () => {
           />
           <Route
             path="/movie/:id"
-            element={
-              isAuthenticated ? <MovieDetail /> : <Navigate to="/login" />
-            }
+            element={isAuthenticated ? <MovieDetail /> : <Navigate to="/login" />}
           />
           <Route
             path="/watch/:id"

@@ -9,7 +9,10 @@ const ContentCard = ({ id, title, image, mediaType, onClick }) => {
     e.stopPropagation(); // Prevent triggering the card's onClick
     const isAlreadyFavorite = favoriteContent.some((item) => item.id === id);
     if (!isAlreadyFavorite) {
-      setFavoriteContent([...favoriteContent, { id, title, image, mediaType }]);
+      setFavoriteContent([
+        ...favoriteContent,
+        { id, title, image, mediaType: mediaType || "movie" },
+      ]);
     }
   };
 
@@ -17,7 +20,10 @@ const ContentCard = ({ id, title, image, mediaType, onClick }) => {
     <div className="content-card-container" onClick={() => onClick(id, mediaType)}>
       <div id={`card-${id}`} className="content-card">
         <div className="card-poster">
-          <img src={image} alt={title} />
+          <img
+            src={image || `https://via.placeholder.com/500x750?text=No+Image`} // Fallback image
+            alt={title}
+          />
           <button className="fav-btn" onClick={handleFavoriteClick}>
             +
           </button>

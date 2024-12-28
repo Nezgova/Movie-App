@@ -18,28 +18,28 @@ const SeriesPage = () => {
   useEffect(() => {
     const fetchSeries = async () => {
       try {
-        // Fetch genres
         const genreResponse = await fetch(
           `https://api.themoviedb.org/3/genre/tv/list?api_key=${apiKey}`
         );
         const genreData = await genreResponse.json();
         setGenres(genreData.genres);
 
-        // Fetch trending series
         const trendingResponse = await fetch(
           `https://api.themoviedb.org/3/trending/tv/day?api_key=${apiKey}&include_adult=false`
         );
         const trendingData = await trendingResponse.json();
         setTrendingSeries(trendingData.results);
 
-        // Fetch series by genre
         const genreSeries = {};
         for (const genre of genreData.genres) {
           const genreSeriesResponse = await fetch(
             `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&with_genres=${genre.id}&include_adult=false`
           );
           const genreSeriesData = await genreSeriesResponse.json();
-          genreSeries[genre.name] = genreSeriesData.results;
+          genreSeries[genre.name] = genreSeriesData.results.map((item) => ({
+            ...item,
+            media_type: "tv",
+          }));
         }
         setSeriesByGenre(genreSeries);
       } catch (error) {
@@ -70,18 +70,9 @@ const SeriesPage = () => {
     }
   };
 
-  const filteredGenres = selectedGenre
-    ? genres.filter((genre) => genre.id === parseInt(selectedGenre))
-    : genres;
-
   return (
     <div className="seriespage">
-      <HeroSection
-        heroContent={trendingSeries}
-        onContentClick={handleSeriesClick}
-        mediaType="tv"
-      />
-
+      <HeroSection heroContent={trendingSeries} onContentClick={handleSeriesClick} mediaType="tv" />
       <SearchBar
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -94,10 +85,10 @@ const SeriesPage = () => {
       {searchResults.length > 0 ? (
         <div className="search-results">
           <h2>Search Results</h2>
-          <ContentGrid content={searchResults} onClick={handleSeriesClick} />
+          <ContentGrid content={searchResults.map((item) => ({ ...item, media_type: "tv" }))} onClick={handleSeriesClick} />
         </div>
       ) : (
-        filteredGenres.map((genre) => (
+        genres.map((genre) => (
           <div key={genre.id} className="genre-section">
             <h2>{genre.name} Series</h2>
             <ContentGrid
