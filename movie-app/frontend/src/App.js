@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Login from "./components/login";
 import Register from "./components/register";
@@ -16,7 +11,7 @@ import SerieDetail from "./components/SerieDetail";
 import WatchPageSerie from "./components/WatchPageSerie";
 import Navbar from "./components/Navbar";
 import ProfilePage from "./components/Profile";
-import { FavoritesProvider } from "./components/FavoritesContext"; // Import the FavoritesProvider
+import { FavoritesProvider } from "./components/FavoritesContext";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -33,22 +28,20 @@ const App = () => {
     setIsAuthenticated(false);
   };
 
+  // PrivateRoute component to protect routes
+  const PrivateRoute = ({ element }) => {
+    return isAuthenticated ? element : <Navigate to="/login" />;
+  };
+
   return (
-    <FavoritesProvider> {/* Wrap the entire app with FavoritesProvider */}
+    <FavoritesProvider>
       <Router>
-        {isAuthenticated && <Navbar onLogout={handleLogout} />}{" "}
-        {/* Show Navbar only if authenticated */}
+        {isAuthenticated && <Navbar onLogout={handleLogout} />}
         <Routes>
           {/* Public Routes */}
           <Route
             path="/login"
-            element={
-              isAuthenticated ? (
-                <Navigate to="/" />
-              ) : (
-                <Login setIsAuthenticated={setIsAuthenticated} />
-              )
-            }
+            element={isAuthenticated ? <Navigate to="/" /> : <Login setIsAuthenticated={setIsAuthenticated} />}
           />
           <Route
             path="/register"
@@ -56,44 +49,14 @@ const App = () => {
           />
 
           {/* Protected Routes */}
-          <Route
-            path="/"
-            element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/movies"
-            element={isAuthenticated ? <Movies /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/movie/:id"
-            element={isAuthenticated ? <MovieDetail /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/watch/:id"
-            element={isAuthenticated ? <WatchPage /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/series"
-            element={isAuthenticated ? <SeriesPage /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/seriedetail/:id"
-            element={
-              isAuthenticated ? <SerieDetail /> : <Navigate to="/login" />
-            }
-          />
-          <Route
-            path="/watchserie/:id/:season/:episode"
-            element={
-              isAuthenticated ? <WatchPageSerie /> : <Navigate to="/login" />
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              isAuthenticated ? <ProfilePage /> : <Navigate to="/login" />
-            }
-          />
+          <Route path="/" element={<PrivateRoute element={<HomePage />} />} />
+          <Route path="/movies" element={<PrivateRoute element={<Movies />} />} />
+          <Route path="/movie/:id" element={<PrivateRoute element={<MovieDetail />} />} />
+          <Route path="/watch/:id" element={<PrivateRoute element={<WatchPage />} />} />
+          <Route path="/series" element={<PrivateRoute element={<SeriesPage />} />} />
+          <Route path="/seriedetail/:id" element={<PrivateRoute element={<SerieDetail />} />} />
+          <Route path="/watchserie/:id/:season/:episode" element={<PrivateRoute element={<WatchPageSerie />} />} />
+          <Route path="/profile" element={<PrivateRoute element={<ProfilePage />} />} />
         </Routes>
       </Router>
     </FavoritesProvider>

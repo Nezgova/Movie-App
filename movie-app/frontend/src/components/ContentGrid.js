@@ -10,7 +10,7 @@ const ContentGrid = ({ content, onClick, isProfilePage, onRemoveFavorite }) => {
           key={item.id}
           id={item.id}
           title={item.title || item.name}
-          image={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+          image={`https://image.tmdb.org/t/p/w500${item.poster_path || '../../public/LOGO.png'}`}
           mediaType={item.media_type || "movie"}
           onClick={onClick}
           isProfilePage={isProfilePage}

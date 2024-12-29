@@ -1,28 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFavorites } from "./FavoritesContext";
 import { useNavigate } from "react-router-dom";
 import ContentGrid from "./ContentGrid";
 import "./Profile.css";
 
 const ProfilePage = () => {
-  const { favoriteContent, setFavoriteContent } = useFavorites();
+  const { favoriteContent, loading } = useFavorites();
+  const [enrichedContent, setEnrichedContent] = useState([]);
   const navigate = useNavigate();
 
-  const favoriteMovies = favoriteContent.filter((item) => item.mediaType === "movie");
-  const favoriteSeries = favoriteContent.filter((item) => item.mediaType === "tv");
+  useEffect(() => {
+    const fetchContentDetails = async () => {
+      try {
+        const enrichedResults = await Promise.all(
+          favoriteContent.map(async (item) => {
+            const type = item.mediaType;
+            const url = `https://api.themoviedb.org/3/${type}/${item.id}?bfbc42cc51a737715f9ab554c951d6ad`;
+            
+            const response = await fetch(url);
+            const data = await response.json();
+            
+            return {
+              ...item,
+              title: type === 'tv' ? data.name : data.title,
+              image: `https://image.tmdb.org/t/p/w500${data.poster_path}`,
+            };
+          })
+        );
+        
+        setEnrichedContent(enrichedResults);
+      } catch (error) {
+        console.error('Error fetching content details:', error);
+      }
+    };
+
+    if (favoriteContent.length > 0) {
+      fetchContentDetails();
+    }
+  }, [favoriteContent]);
 
   const handleContentClick = (id, mediaType) => {
     const route = mediaType === "tv" ? `/seriedetail/${id}` : `/movie/${id}`;
     navigate(route);
   };
 
-  const handleRemoveFavorite = (id) => {
-    setFavoriteContent(favoriteContent.filter(item => item.id !== id));
-  };
+  if (loading) {
+    return (
+      <div className="profile-page">
+        <h1>Your Favorites</h1>
+        <div className="loading-spinner">Loading...</div>
+      </div>
+    );
+  }
+
+  const favoriteMovies = enrichedContent.filter((item) => item.mediaType === "movie");
+  const favoriteSeries = enrichedContent.filter((item) => item.mediaType === "tv");
 
   return (
     <div className="profile-page">
-  
       <h1>Your Favorites</h1>
 
       <div className="favorites-section">
@@ -36,10 +71,9 @@ const ProfilePage = () => {
             }))}
             onClick={handleContentClick}
             isProfilePage={true}
-            onRemoveFavorite={handleRemoveFavorite}
           />
         ) : (
-          <p>No favorite movies yet!</p>
+          <p className="no-favorites">No favorite movies yet!</p>
         )}
       </div>
 
@@ -54,10 +88,9 @@ const ProfilePage = () => {
             }))}
             onClick={handleContentClick}
             isProfilePage={true}
-            onRemoveFavorite={handleRemoveFavorite}
           />
         ) : (
-          <p>No favorite series yet!</p>
+          <p className="no-favorites">No favorite series yet!</p>
         )}
       </div>
     </div>
