@@ -2,7 +2,10 @@
     padding: 20px;
     color: #fff;
     min-height: 100vh;
-    margin-top: 100px;
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .profile-header {
@@ -38,17 +41,310 @@
     margin: 10px 0;
 }
 
-/* Responsive styles for different screen sizes */
-@media (max-width: 768px) {
-    .profile-header h1 {
-        font-size: 1.8rem;
+.profile-section {
+    background: rgba(17, 17, 17, 0.95);
+    border-radius: 15px;
+    padding: 40px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 20px auto 40px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.profile-content {
+    background: rgba(32, 32, 32, 0.95);
+    border-radius: 10px;
+    padding: 30px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.profile-picture-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-picture {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #e31414;
+}
+
+.profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.change-picture-btn {
+    background: transparent;
+    border: 2px solid #e31414;
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.change-picture-btn:hover {
+    background: #e31414;
+}
+
+.member-since {
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
+
+.profile-info {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 30px;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.input-group input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    padding: 10px;
+    color: #fff;
+    width: 100%;
+}
+
+.input-group input:read-only {
+    background: rgba(255, 255, 255, 0.05);
+    cursor: not-allowed;
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto;
+    gap: 20px;
+}
+
+.save-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.save-profile-btn, .delete-account-btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    min-width: 180px;
+}
+
+.save-profile-btn {
+    background-color: #e31414;
+    color: white;
+}
+
+.save-profile-btn:hover {
+    background-color: #b30f0f;
+}
+
+.delete-account-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-account-btn:hover {
+    background-color: #c82333;
+}
+
+.message {
+    font-size: 14px;
+    padding: 8px 15px;
+    border-radius: 4px;
+    max-width: fit-content;
+}
+
+.message.success {
+    background-color: #28a745;
+    color: white;
+}
+
+.message.error {
+    background-color: #dc3545;
+    color: white;
+}
+
+.favorites-container {
+    width: 100%;
+    margin-top: 40px;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: #202020;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: modalFadeIn 0.3s ease;
+}
+
+.modal-content h2 {
+    color: #fff;
+    margin: 0 0 20px 0;
+    font-size: 24px;
+}
+
+.modal-content p {
+    color: #ccc;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.modal-cancel {
+    padding: 10px 20px;
+    border: 1px solid #666;
+    background: transparent;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.modal-cancel:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-delete {
+    padding: 10px 20px;
+    border: none;
+    background: #dc3545;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.modal-delete:hover {
+    background: #c82333;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 900px) {
+    .profile-content {
+        grid-template-columns: 1fr;
     }
 
-    .profile-header p {
-        font-size: 1rem;
+    .profile-picture-container {
+        position: relative;
+        top: 0;
+        margin-bottom: 20px;
     }
 
-    .empty-placeholder p {
-        font-size: 1rem;
+    .profile-info {
+        grid-template-columns: 1fr;
+    }
+
+    .info-item.full-width {
+        grid-column: span 1;
+    }
+
+    .save-profile-btn {
+        grid-column: span 1;
+    }
+
+    .message {
+        grid-column: span 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-section {
+        padding: 20px;
+    }
+
+    .profile-picture {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

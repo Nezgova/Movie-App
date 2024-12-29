@@ -245,6 +245,104 @@ app.delete('/favorites/:contentId', authenticateToken, (req, res) => {
   });
 });
 
+// GET route to fetch user data
+app.get('/api/user', authenticateToken, (req, res) => {
+  const userId = req.user.userId;
+
+  const query = 'SELECT * FROM users WHERE id = ?';
+  db.query(query, [userId], (err, results) => {
+    if (err) {
+      console.error('Error fetching user data:', err);
+      return res.status(500).json({ message: 'Database error', error: err.message });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Return the user data
+    const user = results[0];
+    res.status(200).json({ success: true, user });
+  });
+});
+
+
+// Edit User Profile Route
+app.put('/user/edit', authenticateToken, (req, res) => {
+  const { full_name, phone_number, birthday, profile_picture } = req.body;
+  const userId = req.user.userId;
+
+  // Ensure that the required fields are provided
+  if (!full_name && !phone_number && !birthday && !profile_picture) {
+    return res.status(400).json({ message: 'No valid fields provided for update.' });
+  }
+
+  // Create the update query dynamically based on the fields provided
+  let updateQuery = 'UPDATE users SET ';
+  let updateValues = [];
+  let updateFields = [];
+
+  if (full_name) {
+    updateFields.push('full_name = ?');
+    updateValues.push(full_name);
+  }
+  if (phone_number) {
+    updateFields.push('phone_number = ?');
+    updateValues.push(phone_number);
+  }
+  if (birthday) {
+    updateFields.push('birthday = ?');
+    updateValues.push(birthday);
+  }
+  if (profile_picture) {
+    updateFields.push('profile_picture = ?');
+    updateValues.push(profile_picture);
+  }
+
+  updateQuery += updateFields.join(', ') + ' WHERE id = ?';
+  updateValues.push(userId);
+
+  // Execute the update query
+  db.query(updateQuery, updateValues, (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Database error during profile update' });
+    }
+
+    // If no rows were affected, it means the user ID does not exist
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Success
+    return res.status(200).json({ message: 'Profile updated successfully' });
+  });
+});
+
+// Delete User Account Route
+app.delete('/user/delete', authenticateToken, (req, res) => {
+  const userId = req.user.userId;
+
+  // Query to delete the user from the database
+  const deleteUserQuery = 'DELETE FROM users WHERE id = ?';
+
+  // Execute the delete query
+  db.query(deleteUserQuery, [userId], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Database error during account deletion' });
+    }
+
+    // If no rows were affected, it means the user ID does not exist
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Success
+    return res.status(200).json({ message: 'Account deleted successfully' });
+  });
+});
+
 // Start server
 const port = 5000;
 app.listen(port, () => {
