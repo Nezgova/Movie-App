@@ -42,7 +42,7 @@ export const FavoritesProvider = ({ children }) => {
           const enrichedData = await Promise.all(
             data.map(async (item) => {
               const mediaType = item.media_type;
-              const url = `https://api.themoviedb.org/3/${mediaType === 'movie' ? 'movie' : 'tv'}/${item.content_id}?api_key=YOUR_TMDB_API_KEY`;
+              const url = `https://api.themoviedb.org/3/${mediaType === 'movie' ? 'movie' : 'tv'}/${item.content_id}?api_key=bfbc42cc51a737715f9ab554c951d6ad`;
 
               const mediaResponse = await fetch(url);
               const mediaData = await mediaResponse.json();
