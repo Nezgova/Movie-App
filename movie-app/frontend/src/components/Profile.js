@@ -15,15 +15,22 @@ const ProfilePage = () => {
         const enrichedResults = await Promise.all(
           favoriteContent.map(async (item) => {
             const type = item.mediaType;
-            const url = `https://api.themoviedb.org/3/${type}/${item.id}?bfbc42cc51a737715f9ab554c951d6ad`;
+            const url = `https://api.themoviedb.org/3/${type}/${item.id}?api_key=bfbc42cc51a737715f9ab554c951d6ad`;
             
             const response = await fetch(url);
             const data = await response.json();
-            
+
+            // Get the image from poster_path or backdrop_path
+            const image = data.poster_path
+              ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
+              : data.backdrop_path
+              ? `https://image.tmdb.org/t/p/w500${data.backdrop_path}`
+              : '/LOGO.png'; // Fallback to logo image
+
             return {
               ...item,
               title: type === 'tv' ? data.name : data.title,
-              image: `https://image.tmdb.org/t/p/w500${data.poster_path}`,
+              image: image,
             };
           })
         );

@@ -37,7 +37,27 @@ export const FavoritesProvider = ({ children }) => {
         if (response.ok) {
           const data = await response.json();
           console.log('Fetched favorites:', data);
-          setFavoriteContent(data);
+
+          // Enrich the favorite content with title and image
+          const enrichedData = await Promise.all(
+            data.map(async (item) => {
+              const mediaType = item.media_type;
+              const url = `https://api.themoviedb.org/3/${mediaType === 'movie' ? 'movie' : 'tv'}/${item.content_id}?api_key=YOUR_TMDB_API_KEY`;
+
+              const mediaResponse = await fetch(url);
+              const mediaData = await mediaResponse.json();
+
+              return {
+                ...item,
+                title: mediaType === 'tv' ? mediaData.name : mediaData.title,
+                poster_path: mediaData.poster_path
+                  ? `https://image.tmdb.org/t/p/w500${mediaData.poster_path}`
+                  : 'path/to/fallback-image.jpg',
+              };
+            })
+          );
+
+          setFavoriteContent(enrichedData);
         } else {
           console.error('Failed to fetch favorites:', response.statusText);
         }
@@ -58,37 +78,37 @@ export const FavoritesProvider = ({ children }) => {
       console.error('No valid token found');
       return;
     }
-  
+
     // Log the incoming content object
     console.log('Original content object:', content);
-  
+
     try {
       // Ensure content.id exists
       if (!content.id) {
         console.error('Content ID is missing');
         return;
       }
-  
+
       // Ensure mediaType exists
       if (!content.mediaType) {
         console.error('Media type is missing');
         return;
       }
-  
+
       const favoriteData = {
         content_id: content.id.toString(), // Convert to string since content_id is VARCHAR
         media_type: content.mediaType.toLowerCase() // Ensure it's lowercase
       };
-  
+
       // Log the prepared data
       console.log('Prepared favorite data:', favoriteData);
-  
+
       // Validate media_type
       if (!['movie', 'tv'].includes(favoriteData.media_type)) {
         console.error('Invalid media type:', favoriteData.media_type);
         return;
       }
-  
+
       console.log('Sending request to add to favorites:', JSON.stringify(favoriteData));
       
       const response = await fetch('http://localhost:5000/favorites', {
@@ -99,12 +119,12 @@ export const FavoritesProvider = ({ children }) => {
         },
         body: JSON.stringify(favoriteData)
       });
-  
+
       console.log('Response status:', response.status);
       
       const responseData = await response.json();
       console.log('Response data:', responseData);
-  
+
       if (response.ok) {
         console.log('Successfully added to favorites:', responseData);
         setFavoriteContent(prev => [...prev, responseData]);
