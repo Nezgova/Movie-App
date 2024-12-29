@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./navbar.css";
 
-const Navbar = ({ onLogout }) => {
+const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -24,14 +24,6 @@ const Navbar = ({ onLogout }) => {
           </li>
           <li>
             <Link to="/series">Series</Link>
-          </li>
-          <li>
-            <Link to="/Profile">Profile</Link>
-          </li>
-          <li>
-            <button onClick={onLogout} className="logout-button">
-              Logout
-            </button>
           </li>
         </ul>
       </div>
