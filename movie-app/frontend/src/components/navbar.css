@@ -1,7 +1,7 @@
-/* components/navbar.css */
+/* Navbar container */
 .navbar {
-  background-color: #191d26; /* Dark background */
-  padding: 15px 0; /* Increased padding for a more spacious look */
+  background-color: #191d26;
+  padding: 15px 0;
   position: fixed;
   width: 100%;
   top: 0;
@@ -14,6 +14,7 @@
   padding: 0 20px;
 }
 
+/* Flex container for links */
 .navbar ul {
   list-style-type: none;
   padding: 0;
@@ -24,7 +25,7 @@
 }
 
 .navbar li {
-  margin: 0 25px; /* Increased space between items for a more spread-out look */
+  margin: 0 30px; /* Reduced space between items on desktop */
 }
 
 .navbar a {
@@ -51,14 +52,15 @@
 }
 
 .navbar a:hover::after {
-  width: 100%; /* Underline effect on hover */
+  width: 100%;
 }
 
 .navbar a:hover {
   color: #ff4747;
-  transform: scale(1.1); /* Slightly enlarge text on hover */
+  transform: scale(1.1);
 }
 
+/* Logout button styles */
 .navbar .logout-button {
   background-color: #ff4747;
   color: white;
@@ -96,10 +98,74 @@
 
 .navbar .logout-button:hover {
   color: white;
-  transform: translateY(-3px); /* Slight lift effect */
+  transform: translateY(-3px);
+  background-color: #e63939;
+  box-shadow: 0 6px 12px rgba(255, 71, 71, 0.5);
 }
 
-.navbar .logout-button:hover {
+/* Mobile button for toggling menu */
+.navbar .menu-toggle {
+  display: none;
+  background: #ff4747;
+  color: white;
+  border: none;
+  font-size: 22px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 auto; /* Center the button */
+}
+
+.navbar .menu-toggle:hover {
   background-color: #e63939;
-  box-shadow: 0 6px 12px rgba(255, 71, 71, 0.5); /* Glow effect */
+}
+
+/* Mobile navbar styles */
+.navbar ul {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Hide menu on mobile */
+.navbar .nav-links {
+  display: flex;
+}
+
+/* Show menu on mobile */
+.navbar .nav-links.show {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  /* Change the layout on mobile */
+  .navbar ul {
+    display: none; /* Hide menu items */
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+  }
+
+  .navbar .menu-toggle {
+    display: block;
+  }
+
+  .navbar .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+  }
+
+  .navbar .nav-links.show {
+    display: block;
+  }
+
+  .navbar li {
+    margin: 10px 0;
+  }
+
+  .navbar .logout-button {
+    margin-top: 20px;
+  }
 }

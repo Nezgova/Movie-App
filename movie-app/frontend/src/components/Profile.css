@@ -42,7 +42,7 @@
 }
 
 .profile-section {
-    background: rgba(17, 17, 17, 0.95);
+    background: #191d26;
     border-radius: 15px;
     padding: 40px;
     width: 100%;
@@ -52,7 +52,7 @@
 }
 
 .profile-content {
-    background: rgba(32, 32, 32, 0.95);
+    background: #1b222c;
     border-radius: 10px;
     padding: 30px;
     width: 100%;
@@ -86,8 +86,8 @@
 
 .change-picture-btn {
     background: transparent;
-    border: 2px solid #e31414;
-    color: #fff;
+    border: 2px solid #FF204E; /* Updated border color */
+    color: #FF204E; /* Updated text color */
     padding: 8px 20px;
     border-radius: 5px;
     cursor: pointer;
@@ -95,7 +95,8 @@
 }
 
 .change-picture-btn:hover {
-    background: #e31414;
+    background: #FF204E; /* Updated hover background color */
+    color: #fff; /* White text on hover */
 }
 
 .member-since {
@@ -174,12 +175,12 @@
 }
 
 .save-profile-btn {
-    background-color: #e31414;
+    background-color: #FF204E; /* Updated background color */
     color: white;
 }
 
 .save-profile-btn:hover {
-    background-color: #b30f0f;
+    background-color: #d41c44; /* Darker hover color */
 }
 
 .delete-account-btn {
@@ -275,7 +276,7 @@
 .modal-delete {
     padding: 10px 20px;
     border: none;
-    background: #dc3545;
+    background: #FF204E; /* Updated button color */
     color: #fff;
     border-radius: 5px;
     cursor: pointer;
@@ -285,7 +286,7 @@
 }
 
 .modal-delete:hover {
-    background: #c82333;
+    background: #d41c44; /* Darker hover color */
 }
 
 @keyframes modalFadeIn {

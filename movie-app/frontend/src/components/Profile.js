@@ -241,15 +241,12 @@ const ProfilePage = () => {
           <div className="profile-info">
             <div className="profile-picture-section">
               <div className="profile-picture">
-              <img
-  src={userData.profile_picture
-    ? `http://localhost:5000${userData.profile_picture}`
-    : "https://via.placeholder.com/200"}
-  alt="Profile"
-/>
-
-
-
+                <img
+                  src={userData.profile_picture
+                    ? `http://localhost:5000${userData.profile_picture}`
+                    : "https://via.placeholder.com/200"}
+                  alt="Profile"
+                />
               </div>
               <button className="change-picture-btn" onClick={() => fileInputRef.current.click()}>
                 Change Picture
