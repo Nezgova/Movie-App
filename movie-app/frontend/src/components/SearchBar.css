@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:wght@400;700&display=swap');
+
 .search-bar {
     display: flex;
     justify-content: center;
     margin: 20px 0;
     width: 100%;
     padding: 0 20px;
+    font-family: 'Advent Pro', sans-serif; /* Apply the font here */
 }
 
 .search-container {
@@ -21,6 +24,7 @@
     border-radius: 5px;
     background-color: #1a1a1a;
     color: white;
+    font-family: 'Advent Pro', sans-serif; /* Apply the font here */
 }
 
 .genre-select {
@@ -49,6 +53,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
+    font-family: 'Advent Pro', sans-serif; /* Apply the font here */
 }
 
 .search-bar button:hover {

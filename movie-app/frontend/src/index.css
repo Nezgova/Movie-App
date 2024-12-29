@@ -1,4 +1,5 @@
-/* Global Reset */
+/* Global Reset */@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:wght@400;700&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,11 +7,15 @@
 }
 
 /* Body and Root Styles */
+/* Body and Root Styles */
 html, body {
   height: 100%;
   width: 100%;
   background-color: #12151c;
+  font-family: 'Advent Pro', sans-serif; /* Apply the font here */
+  color: #f4f4f4; /* Set text color to ensure visibility on dark background */
 }
+
 
 #root {
   width: 100vw;

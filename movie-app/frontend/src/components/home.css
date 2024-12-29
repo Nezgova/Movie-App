@@ -17,7 +17,7 @@ h1, h2, h3 {
 
 /* View More Button */
 .view-more-btn {
-  background: #661b1c;
+  background: #fc2d30;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -25,10 +25,13 @@ h1, h2, h3 {
   cursor: pointer;
   display: block;
   text-align: center;
+  font-family: 'Advent Pro', sans-serif; /* Apply the font here */
+  border-radius: 5px;
+  font-weight: bolder;
 }
 
 .view-more-btn:hover {
-  background-color: #661b1c;
+  background-color: #da1317;
 }
 
 /* Ensure consistent grid gap on the homepage */
