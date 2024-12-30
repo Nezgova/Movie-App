@@ -107,12 +107,17 @@
 }
 
 /* Director Section */
+/* Director Section */
 .movie-director {
   margin-top: 50px;
-  text-align: center;}
-  
- 
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  flex-direction: column; /* Stack the director info vertically */
+  text-align: center;
+}
 
+/* Director Info Card */
 .director-info {
   background: #191d26;
   border-radius: 15px;
@@ -120,7 +125,8 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
- 
+  width: 200px; /* Set a fixed width for the director card */
+  margin: 0 auto; /* Ensure it's centered */
 }
 
 .director-info:hover {
