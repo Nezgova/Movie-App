@@ -12,20 +12,44 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Flex container for links */
-.navbar ul {
+/* Logo section */
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  height: 55px; /* Increased from 40px */
+  width: auto;
+}
+
+.logo-text {
+  color: white;
+  font-size: 32px; /* Increased from 24px */
+  font-weight: bold;
+}
+
+.red-n {
+  color: #ff4747;
+}
+
+/* Navigation links */
+.nav-links {
+  display: flex;
   list-style-type: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  justify-content: center;
   align-items: center;
 }
 
 .navbar li {
-  margin: 0 30px; /* Reduced space between items on desktop */
+  margin: 0 20px;
 }
 
 .navbar a {
@@ -103,8 +127,8 @@
   box-shadow: 0 6px 12px rgba(255, 71, 71, 0.5);
 }
 
-/* Mobile button for toggling menu */
-.navbar .menu-toggle {
+/* Mobile menu toggle */
+.menu-toggle {
   display: none;
   background: #ff4747;
   color: white;
@@ -113,52 +137,34 @@
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
-  margin: 0 auto; /* Center the button */
 }
 
-.navbar .menu-toggle:hover {
-  background-color: #e63939;
-}
-
-/* Mobile navbar styles */
-.navbar ul {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-/* Hide menu on mobile */
-.navbar .nav-links {
-  display: flex;
-}
-
-/* Show menu on mobile */
-.navbar .nav-links.show {
-  display: block;
-}
-
+/* Mobile responsiveness */
 @media (max-width: 768px) {
-  /* Change the layout on mobile */
-  .navbar ul {
-    display: none; /* Hide menu items */
-    flex-direction: column;
-    width: 100%;
-    text-align: center;
+  .navbar-container {
+    flex-wrap: wrap;
+    justify-content: center; /* Center the items */
+    gap: 15px; /* Add space between logo and menu button */
   }
 
-  .navbar .menu-toggle {
+  .logo-section {
+    margin-right: 0;
+  }
+
+  .menu-toggle {
     display: block;
   }
 
-  .navbar .nav-links {
+  .nav-links {
     display: none;
     flex-direction: column;
     width: 100%;
     text-align: center;
+    margin-top: 20px;
   }
 
-  .navbar .nav-links.show {
-    display: block;
+  .nav-links.show {
+    display: flex;
   }
 
   .navbar li {
@@ -166,6 +172,6 @@
   }
 
   .navbar .logout-button {
-    margin-top: 20px;
+    margin-top: 10px;
   }
 }

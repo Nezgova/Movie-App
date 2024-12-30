@@ -12,8 +12,14 @@ const Navbar = ({ onLogout }) => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
+        <div className="logo-section">
+          <img src="/LOGO.png" alt="Nezflix Logo" className="logo" />
+          <span className="logo-text">
+            <span className="red-n">N</span>ezflix
+          </span>
+        </div>
         <button className="menu-toggle" onClick={toggleMenu}>
-          ☰ {/* Hamburger icon for mobile */}
+          ☰
         </button>
         <ul className={`nav-links ${isMenuOpen ? "show" : ""}`}>
           <li>
