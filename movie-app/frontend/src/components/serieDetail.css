@@ -1,141 +1,158 @@
 /* General Styles */
 .serie-detail {
-  background: linear-gradient(to bottom, #121212, #1e1e1e); /* Smooth gradient background */
-  color: #f5f5f5; /* Light gray text */
-  margin: 3rem auto;
-  max-width: 80%;
+  background: #1b222c;
+  color: white;
+  margin: 50px auto;
   padding: 30px;
   border-radius: 15px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  transition: all 0.3s ease-in-out;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  font-family: 'Arial', sans-serif; /* Unified font family */
+  max-width: 900px;
+  width: 100%;
+  transition: transform 0.3s ease-in-out;
 }
 
+.serie-detail:hover {
+  transform: scale(1.01);
+}
+
+/* Serie Title */
 .serie-detail h1 {
   text-align: center;
-  font-size: 48px;
-  text-shadow: 0 0 15px rgba(255, 99, 71, 0.7); /* Softer glowing effect */
-  margin-bottom: 20px;
+  font-size: 42px; /* Matching the movie title size */
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.6); /* Subtle glow */
+  margin-bottom: 30px;
+  font-weight: 700; /* Bold and elegant */
+  letter-spacing: 2px;
 }
 
+/* Serie Info Section */
 .serie-info {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   gap: 30px;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  flex-wrap: wrap;
 }
 
 .serie-poster {
-  width: 260px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  transition: transform 0.3s ease-in-out;
+  width: 250px; /* Consistent poster size */
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .serie-poster:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
+  box-shadow: 0 15px 30px rgba(255, 71, 71, 0.6);
 }
 
+/* Description Section */
 .serie-description {
-  flex: 1;
-  padding: 10px;
-}
-
-.serie-description p {
+  max-width: 550px;
+  padding: 20px;
   font-size: 18px;
-  line-height: 1.7;
-  margin-bottom: 20px;
+  line-height: 1.8;
+  border-left: 3px solid #ff4747; /* Elegant red accent */
+  background: #191d26;
 }
 
-.serie-rating,
-.serie-episodes,
-.serie-seasons {
-  margin-top: 10px;
+/* Rating Section */
+.serie-rating {
+  margin-top: 15px;
   font-size: 20px;
-  color: #ff6666;
   font-weight: bold;
+  color: #ffb400; /* Consistent gold color for ratings */
 }
 
-/* Season and Episode Selection */
-.season-episode-selection {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  margin: 30px 0;
+/* Cast Section */
+.serie-cast {
+  margin-top: 50px;
+  text-align: center;
 }
 
-.season-episode-selection label {
-  font-size: 20px;
-  font-weight: 600;
-  color: #f5f5f5;
+.cast-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
 }
 
-.season-episode-selection select {
-  font-size: 16px;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #292929;
-  color: #f5f5f5;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease;
+.cast-member {
+  background: #191d26;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
 }
 
-.season-episode-selection select:hover {
-  background-color: #333333;
+.cast-member:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
+}
+
+.actor-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.cast-member p {
+  margin: 5px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ccc;
 }
 
 /* Watch Button */
 .watch-button {
-  background: linear-gradient(to right, #ff4747, #ff6b6b);
+  background:#FF204E;
   color: white;
-  padding: 12px 25px;
+  padding: 15px 30px;
   font-size: 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: block;
-  margin: 20px auto;
-  text-transform: uppercase;
   font-weight: bold;
-  box-shadow: 0 4px 12px rgba(255, 71, 71, 0.6);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  display: block;
+  margin: 30px auto;
+  text-decoration: none;
 }
 
 .watch-button:hover {
-  background: linear-gradient(to right, #ff6b6b, #ff4747);
-  box-shadow: 0 6px 18px rgba(255, 71, 71, 0.8);
-  transform: translateY(-2px);
-}
-
-.watch-button:active {
-  transform: translateY(0);
-  box-shadow: none;
+  background: #cd1a3e;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+  transform: scale(1.1);
 }
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .serie-info {
-      flex-direction: column;
-      align-items: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
   }
 
   .serie-poster {
-      width: 200px;
+    width: 220px;
   }
 
   .serie-description {
-      text-align: center;
-  }
-
-  .season-episode-selection {
-      flex-direction: column;
+    text-align: center;
   }
 
   .watch-button {
-      font-size: 18px;
+    font-size: 18px;
+    padding: 12px 20px;
   }
+}
+
+.link{
+  text-decoration: none;
 }

@@ -84,7 +84,7 @@ const MovieDetailPage = () => {
         ))}
       </div>
 
-      <Link to={`/watch/${id}`}>
+      <Link className='link' to={`/watch/${id}`}>
         <button className="watch-button">Watch Now</button>
       </Link>
     </div>

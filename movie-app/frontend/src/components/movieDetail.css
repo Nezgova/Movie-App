@@ -2,24 +2,27 @@
 
 /* General Styles */
 .movie-detail {
-  background-color: #121212; /* Dark background */
+  background: #1b222c;
   color: white;
   margin: 50px auto;
-  margin-top: 10vh; /* Centered with auto margin */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  font-family: 'Arial', sans-serif; /* Default font */
-  max-width: 900px; /* Limit the width for better layout */
-  width: 100%; /* Full width up to the max-width */
+  margin-top: 15vh;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  font-family: 'Arial', sans-serif;
+  max-width: 900px;
+  width: 100%;
+  animation: fadeIn 0.8s ease-in-out; /* Fade-in effect for elegance */
 }
 
 /* Movie Title */
 .movie-detail h1 {
   text-align: center;
-  font-size: 36px; /* Slightly smaller font */
-  text-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Glowing red text */
-  margin-bottom: 20px; /* Space under the title */
+  font-size: 42px;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.6); /* Subtle glow */
+  margin-bottom: 30px;
+  font-weight: 700; /* Bold and elegant */
+  letter-spacing: 2px; /* Slightly spaced out letters */
 }
 
 /* Movie Info Section */
@@ -28,82 +31,151 @@
   justify-content: center;
   align-items: flex-start;
   margin-top: 20px;
-  gap: 20px; /* Space between poster and description */
-  flex-wrap: wrap; /* Allow wrapping on small screens */
+  gap: 30px; /* More spacing for a clean layout */
+  flex-wrap: wrap;
 }
 
 .movie-poster {
-  width: 180px; /* Smaller poster size */
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  width: 250px; /* Larger and more prominent poster */
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.movie-poster:hover {
+  transform: scale(1.1);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7); /* Deeper shadow on hover */
 }
 
 .movie-description {
-  width: 100%;
-  max-width: 500px; /* Limit description width */
+  max-width: 550px;
   padding: 20px;
-  font-size: 16px; /* Slightly smaller font */
-}
-
-.movie-description p {
-  line-height: 1.6;
+  font-size: 18px;
+  line-height: 1.8;
+  border-left: 3px solid #ff4747; /* Elegant red accent */
+  background: #191d26;
 }
 
 .movie-rating {
-  margin-top: 10px;
-  font-size: 18px;
-  color: #ff4747; /* Red color for rating */
+  margin-top: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffb400; /* Gold color for rating */
 }
 
 /* Cast Section */
 .movie-cast {
-  margin-top: 40px;
+  margin-top: 50px;
   text-align: center;
 }
 
 .cast-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Modern grid layout */
+  gap: 30px;
+  margin-top: 20px;
 }
 
-.cast-member,
-.director-info {
+.cast-member {
+  background: #191d26;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
-  margin: 10px;
-  max-width: 120px; /* Limit width for each cast member */
 }
 
-.actor-photo,
-.director-photo {
-  width: 80px; /* Smaller actor photos */
-  height: 80px; /* Smaller actor photos */
+.cast-member:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
+}
+
+.actor-photo {
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  object-fit: cover;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-.cast-member p,
+.cast-member p {
+  margin: 5px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ccc; /* Subtle text color */
+}
+
+/* Director Section */
+.movie-director {
+  margin-top: 50px;
+  text-align: center;}
+  
+ 
+
+.director-info {
+  background: #191d26;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+ 
+}
+
+.director-info:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
+}
+
+.director-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
 .director-info p {
-  margin-top: 5px;
-  font-size: 14px; /* Smaller text for names and characters */
+  margin: 5px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ccc;
 }
 
 /* Watch Now Button */
 .watch-button {
-  background-color: #ff4747; /* Red background */
+  background:#FF204E;
   color: white;
-  padding: 12px 20px;
-  font-size: 18px;
+  padding: 15px 30px;
+  font-size: 20px;
+  font-weight: bold;
   border: none;
-  border-radius: 5px;
+  border-radius: 30px;
   cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   display: block;
-  margin: 20px auto 0; /* Center button horizontally */
+  margin: 30px auto;
 }
 
 .watch-button:hover {
-  background-color: #e43f3f; /* Darker red */
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Glowing effect */
+  background: #cd1a3e;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+  transform: scale(1.1);
+}
+
+/* Keyframes for fade-in effect */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.link{
+  text-decoration: none;
 }

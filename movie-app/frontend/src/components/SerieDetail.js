@@ -118,7 +118,7 @@ const SerieDetailPage = () => {
       </div>
 
       {/* Watch Now Button */}
-      <Link to={`/watchserie/${id}/${selectedSeason}/${selectedEpisode}`}>
+      <Link className='link' to={`/watchserie/${id}/${selectedSeason}/${selectedEpisode}`}>
         <button className="watch-button">Watch Now</button>
       </Link>
     </div>
