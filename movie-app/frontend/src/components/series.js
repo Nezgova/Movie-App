@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "./series.css";
 import HeroSection from "./HeroSection";
@@ -12,6 +12,7 @@ const SeriesPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
+  const [selectedGenreName, setSelectedGenreName] = useState(""); // Add this state for genre name
   const apiKey = "bfbc42cc51a737715f9ab554c951d6ad";
   const navigate = useNavigate();
 
@@ -54,38 +55,91 @@ const SeriesPage = () => {
     navigate(`/seriedetail/${id}`);
   };
 
-  const handleSearch = async () => {
-    if (searchQuery.trim() === "") return;
-
+  const handleSearch = useCallback(async () => {
     try {
-      let searchUrl = `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${searchQuery}&include_adult=false`;
-      if (selectedGenre) {
-        searchUrl += `&with_genres=${selectedGenre}`;
+      let endpoint;
+      let url;
+
+      if (searchQuery.trim() === "" && selectedGenre) {
+        endpoint = "discover/tv";
+        url = `https://api.themoviedb.org/3/${endpoint}?api_key=${apiKey}&with_genres=${selectedGenre}&include_adult=false`;
+      } else if (searchQuery.trim() !== "") {
+        endpoint = "search/tv";
+        url = `https://api.themoviedb.org/3/${endpoint}?api_key=${apiKey}&query=${encodeURIComponent(searchQuery)}&include_adult=false`;
+        if (selectedGenre) {
+          url += `&with_genres=${selectedGenre}`;
+        }
+      } else {
+        setSearchResults([]);
+        return;
       }
-      const response = await fetch(searchUrl);
+
+      const response = await fetch(url);
       const data = await response.json();
-      setSearchResults(data.results);
+
+      const formattedResults = data.results.map(item => ({
+        ...item,
+        media_type: "tv"
+      }));
+
+      setSearchResults(formattedResults);
+
     } catch (error) {
       console.error("Error searching series:", error);
+      setSearchResults([]);
+    }
+  }, [searchQuery, selectedGenre, apiKey]);
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchQuery, selectedGenre, handleSearch]);
+
+  const handleGenreChange = (newGenre) => {
+    setSelectedGenre(newGenre);
+    // Find and set the genre name when genre is selected
+    if (newGenre) {
+      const selectedGenreObj = genres.find(genre => genre.id.toString() === newGenre.toString());
+      setSelectedGenreName(selectedGenreObj ? selectedGenreObj.name : '');
+    } else {
+      setSelectedGenreName('');
+    }
+  };
+
+  const getResultsTitle = () => {
+    if (searchQuery && selectedGenreName) {
+      return `Search Results for "${searchQuery}" in ${selectedGenreName}`;
+    } else if (searchQuery) {
+      return `Search Results for "${searchQuery}"`;
+    } else if (selectedGenreName) {
+      return `${selectedGenreName} Series`;
+    } else {
+      return "Search Results";
     }
   };
 
   return (
     <div className="seriespage">
-      <HeroSection heroContent={trendingSeries} onContentClick={handleSeriesClick} mediaType="tv" />
+      <HeroSection 
+        heroContent={trendingSeries} 
+        onContentClick={handleSeriesClick} 
+        mediaType="tv" 
+      />
       <SearchBar
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         handleSearch={handleSearch}
         genres={genres}
         selectedGenre={selectedGenre}
-        setSelectedGenre={setSelectedGenre}
+        setSelectedGenre={handleGenreChange}
       />
 
       {searchResults.length > 0 ? (
         <div className="search-results">
-          <h2>Search Results</h2>
-          <ContentGrid content={searchResults.map((item) => ({ ...item, media_type: "tv" }))} onClick={handleSeriesClick} />
+          <h2>{getResultsTitle()}</h2>
+          <ContentGrid 
+            content={searchResults} 
+            onClick={handleSeriesClick} 
+          />
         </div>
       ) : (
         genres.map((genre) => (
