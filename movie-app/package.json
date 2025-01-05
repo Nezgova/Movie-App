@@ -1,11 +1,14 @@
 {
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "npm run start --prefix backend",
-    "client": "npm run start --prefix frontend"
+    "start": "concurrently \"npm run start-backend\" \"npm run start-frontend\"",
+    "start-backend": "cd backend && node server.js",
+    "start-frontend": "cd frontend && npm start"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "swiper": "^11.1.15"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
 }
