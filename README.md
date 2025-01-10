@@ -15,7 +15,7 @@
 
     *Frontend: React.js for a dynamic and responsive user interface.
     *Backend: Node.js with Express for robust server-side logic.
-    *Database: MongoDB for storing user data and content metadata.
+    *Database: MySQL for storing user data and content.
     *APIs: Custom APIs for fetching and managing media content.
     *Authentication: Integrated with JWT (JSON Web Tokens) for secure access control.
 
