@@ -1,5 +1,3 @@
-# Movie-App
-
 # Nezflix - Streaming Platform
 
     *Nezflix is a cutting-edge streaming service designed to bring a wide variety of movies and TV series to audiences globally. This platform allows users to explore, watch, and enjoy content ranging from action-packed series to blockbuster movies and more.
