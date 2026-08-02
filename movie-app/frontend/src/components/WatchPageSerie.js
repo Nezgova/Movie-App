@@ -60,8 +60,9 @@ const WatchPageSerie = () => {
 
   // Generate the video URL for the selected episode
   const generateVideoUrl = () => {
-    if (!selectedEpisode) return '';
-    return `https://vidsrc.icu/embed/tv/${id}/${selectedEpisode.season_number}/${selectedEpisode.episode_number}`;
+    const sNumber = selectedEpisode?.season_number || season || 1;
+    const eNumber = selectedEpisode?.episode_number || episode || 1;
+    return `https://vidsrc.sbs/embed/tv/${id}/${sNumber}/${eNumber}`;
   };
 
   if (!serie || !episodes.length) return <p>Loading...</p>;

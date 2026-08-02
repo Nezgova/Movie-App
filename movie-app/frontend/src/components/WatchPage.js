@@ -27,7 +27,7 @@ const WatchPage = () => {
 
   // Generate video URL for the movie
   const generateVideoUrl = () => {
-    return `https://vidsrc.icu/embed/movie/${id}`;
+    return `https://vidsrc.sbs/embed/movie/${id}`;
   };
 
   if (!movie) return <p>Loading movie details...</p>;
