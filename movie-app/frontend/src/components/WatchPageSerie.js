@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './WatchPageSerie.css'; // Import CSS for styling
+import './WatchPageSerie.css';
+import { AppContainer, PageContainer } from './layout/Layout';
 
 const WatchPageSerie = () => {
   const { id, season, episode } = useParams(); // Get series ID, season, and episode from the URL
@@ -68,63 +69,52 @@ const WatchPageSerie = () => {
   if (!serie || !episodes.length) return <p>Loading...</p>;
 
   return (
-    <div className="watch-page-serie">
-      {/* Series Info */}
-      <div className="media-description">
-        <h1>{serie.name}</h1>
-        <div className="serie-rating">
-          <strong>Rating:</strong> {serie.vote_average} / 10
+    <AppContainer>
+      <PageContainer>
+        <div className="watch-page-serie">
+          <div className="media-description glass-panel">
+            <h1>{serie.name}</h1>
+            <div className="serie-rating">
+              <strong>Rating:</strong> {serie.vote_average} / 10
+            </div>
+            <p>{serie.overview}</p>
+          </div>
+
+          <div className="video-player glass-panel">
+            {selectedEpisode ? (
+              <>
+                <h2>Season {selectedEpisode.season_number}, Episode {selectedEpisode.episode_number}</h2>
+                <iframe src={generateVideoUrl()} title="Video Player" frameBorder="0" allowFullScreen />
+              </>
+            ) : (
+              <p>Loading video...</p>
+            )}
+          </div>
+
+          <div className="controls-panel">
+            <div className="season-selector glass-panel">
+              <h3>Select Season</h3>
+              <select value={season} onChange={handleSeasonChange}>
+                {[...Array(totalSeasons)].map((_, index) => (
+                  <option key={index + 1} value={index + 1}>Season {index + 1}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="episode-tabs glass-panel">
+              <h3>Episodes</h3>
+              <ul className="episode-list">
+                {episodes.map((ep) => (
+                  <li key={ep.id} className={selectedEpisode?.id === ep.id ? 'selected' : ''} onClick={() => handleEpisodeClick(ep)}>
+                    <button>{ep.episode_number}</button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
-        <p>{serie.overview}</p>
-      </div>
-
-      {/* Video Player */}
-      <div className="video-player">
-        {selectedEpisode ? (
-          <>
-            <h2>Season {selectedEpisode.season_number}, Episode {selectedEpisode.episode_number}</h2>
-            <iframe
-              src={generateVideoUrl()}
-              title="Video Player"
-              width="100%"
-              height="600"
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          </>
-        ) : (
-          <p>Loading video...</p>
-        )}
-      </div>
-
-      {/* Season Selector */}
-      <div className="season-selector">
-        <h3>Select Season:</h3>
-        <select value={season} onChange={handleSeasonChange}>
-          {[...Array(totalSeasons)].map((_, index) => (
-            <option key={index + 1} value={index + 1}>
-              Season {index + 1}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Episode List */}
-      <div className="episode-tabs">
-        <h3>Episodes</h3>
-        <ul className="episode-list">
-          {episodes.map((ep) => (
-            <li
-              key={ep.id}
-              className={selectedEpisode?.id === ep.id ? 'selected' : ''}
-              onClick={() => handleEpisodeClick(ep)}
-            >
-              <button>{ep.episode_number}</button> {/* Display only episode numbers */}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+      </PageContainer>
+    </AppContainer>
   );
 };
 

@@ -4,6 +4,7 @@ import "./movies.css";
 import HeroSection from "./HeroSection";
 import SearchBar from "./SearchBar";
 import ContentGrid from "./ContentGrid";
+import { AppContainer, PageContainer, Section } from "./layout/Layout";
 
 const MoviePage = () => {
   const [moviesByGenre, setMoviesByGenre] = useState({});
@@ -75,39 +76,38 @@ const MoviePage = () => {
     : genres;
 
   return (
-    <div className="moviespage">
-      <HeroSection
-        heroContent={popularMovies}
-        onContentClick={handleMovieClick}
-        mediaType="movie"
-      />
+    <AppContainer>
+      <PageContainer>
+        <div className="moviespage">
+          <HeroSection
+            heroContent={popularMovies}
+            onContentClick={handleMovieClick}
+            mediaType="movie"
+          />
 
-      <SearchBar
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        handleSearch={handleSearch}
-        genres={genres}
-        selectedGenre={selectedGenre}
-        setSelectedGenre={setSelectedGenre}
-      />
+          <SearchBar
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            handleSearch={handleSearch}
+            genres={genres}
+            selectedGenre={selectedGenre}
+            setSelectedGenre={setSelectedGenre}
+          />
 
-      {searchResults.length > 0 ? (
-        <div className="search-results">
-          <h2>Search Results</h2>
-          <ContentGrid content={searchResults} onClick={handleMovieClick} />
+          {searchResults.length > 0 ? (
+            <Section title="Search Results" subtitle="Filtered movie results in a consistent layout">
+              <ContentGrid content={searchResults} onClick={handleMovieClick} />
+            </Section>
+          ) : (
+            filteredGenres.map((genre) => (
+              <Section key={genre.id} title={`${genre.name} Movies`} subtitle="A curated set of featured picks">
+                <ContentGrid content={moviesByGenre[genre.name] || []} onClick={handleMovieClick} />
+              </Section>
+            ))
+          )}
         </div>
-      ) : (
-        filteredGenres.map((genre) => (
-          <div key={genre.id} className="genre-section">
-            <h2>{genre.name} Movies</h2>
-            <ContentGrid
-              content={moviesByGenre[genre.name] || []}
-              onClick={handleMovieClick}
-            />
-          </div>
-        ))
-      )}
-    </div>
+      </PageContainer>
+    </AppContainer>
   );
 };
 

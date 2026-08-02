@@ -41,18 +41,21 @@ export const FavoritesProvider = ({ children }) => {
           // Enrich the favorite content with title and image
           const enrichedData = await Promise.all(
             data.map(async (item) => {
-              const mediaType = item.media_type;
-              const url = `https://api.themoviedb.org/3/${mediaType === 'movie' ? 'movie' : 'tv'}/${item.content_id}?api_key=bfbc42cc51a737715f9ab554c951d6ad`;
+              const mediaType = item.media_type || item.mediaType;
+              const contentId = item.content_id || item.id;
+              const url = `https://api.themoviedb.org/3/${mediaType === 'movie' ? 'movie' : 'tv'}/${contentId}?api_key=bfbc42cc51a737715f9ab554c951d6ad`;
 
               const mediaResponse = await fetch(url);
               const mediaData = await mediaResponse.json();
 
               return {
                 ...item,
+                id: contentId,
+                content_id: contentId,
+                media_type: mediaType,
+                mediaType: mediaType,
                 title: mediaType === 'tv' ? mediaData.name : mediaData.title,
-                poster_path: mediaData.poster_path
-                  ? `https://image.tmdb.org/t/p/w500${mediaData.poster_path}`
-                  : 'path/to/fallback-image.jpg',
+                poster_path: mediaData.poster_path || '',
               };
             })
           );
@@ -127,7 +130,16 @@ export const FavoritesProvider = ({ children }) => {
 
       if (response.ok) {
         console.log('Successfully added to favorites:', responseData);
-        setFavoriteContent(prev => [...prev, responseData]);
+        const newItem = {
+          ...responseData,
+          id: responseData.content_id || content.id,
+          content_id: responseData.content_id || content.id,
+          media_type: responseData.media_type || content.mediaType,
+          mediaType: responseData.media_type || content.mediaType,
+          title: content.title || '',
+          poster_path: content.poster_path || (content.image ? content.image.replace('https://image.tmdb.org/t/p/w500', '') : '')
+        };
+        setFavoriteContent(prev => [...prev, newItem]);
       } else {
         console.error('Error response:', responseData);
         throw new Error(responseData.message || 'Error adding to favorites');

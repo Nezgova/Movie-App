@@ -4,6 +4,7 @@ import "./series.css";
 import HeroSection from "./HeroSection";
 import SearchBar from "./SearchBar";
 import ContentGrid from "./ContentGrid";
+import { AppContainer, PageContainer, Section } from "./layout/Layout";
 
 const SeriesPage = () => {
   const [seriesByGenre, setSeriesByGenre] = useState({});
@@ -118,41 +119,37 @@ const SeriesPage = () => {
   };
 
   return (
-    <div className="seriespage">
-      <HeroSection 
-        heroContent={trendingSeries} 
-        onContentClick={handleSeriesClick} 
-        mediaType="tv" 
-      />
-      <SearchBar
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        handleSearch={handleSearch}
-        genres={genres}
-        selectedGenre={selectedGenre}
-        setSelectedGenre={handleGenreChange}
-      />
-
-      {searchResults.length > 0 ? (
-        <div className="search-results">
-          <h2>{getResultsTitle()}</h2>
-          <ContentGrid 
-            content={searchResults} 
-            onClick={handleSeriesClick} 
+    <AppContainer>
+      <PageContainer>
+        <div className="seriespage">
+          <HeroSection
+            heroContent={trendingSeries}
+            onContentClick={handleSeriesClick}
+            mediaType="tv"
           />
+          <SearchBar
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            handleSearch={handleSearch}
+            genres={genres}
+            selectedGenre={selectedGenre}
+            setSelectedGenre={handleGenreChange}
+          />
+
+          {searchResults.length > 0 ? (
+            <Section title={getResultsTitle()} subtitle="Series results sized to the shared layout system">
+              <ContentGrid content={searchResults} onClick={handleSeriesClick} />
+            </Section>
+          ) : (
+            genres.map((genre) => (
+              <Section key={genre.id} title={`${genre.name} Series`} subtitle="Featured series in a consistent grid">
+                <ContentGrid content={seriesByGenre[genre.name] || []} onClick={handleSeriesClick} />
+              </Section>
+            ))
+          )}
         </div>
-      ) : (
-        genres.map((genre) => (
-          <div key={genre.id} className="genre-section">
-            <h2>{genre.name} Series</h2>
-            <ContentGrid
-              content={seriesByGenre[genre.name] || []}
-              onClick={handleSeriesClick}
-            />
-          </div>
-        ))
-      )}
-    </div>
+      </PageContainer>
+    </AppContainer>
   );
 };
 

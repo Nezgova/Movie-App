@@ -3,6 +3,7 @@ import { useFavorites } from "./FavoritesContext";
 import { useNavigate } from "react-router-dom";
 import ContentGrid from "./ContentGrid";
 import "./Profile.css";
+import { AppContainer, PageContainer, Section } from "./layout/Layout";
 
 const ProfilePage = () => {
   const { favoriteContent, loading } = useFavorites();
@@ -76,41 +77,9 @@ const ProfilePage = () => {
     fetchUserData();
   }, [navigate]);
 
-  // Fetch enriched content
+  // Set enriched content from favoriteContent
   useEffect(() => {
-    const fetchContentDetails = async () => {
-      try {
-        const enrichedResults = await Promise.all(
-          favoriteContent.map(async (item) => {
-            const type = item.mediaType;
-            const url = `https://api.themoviedb.org/3/${type}/${item.id}?api_key=bfbc42cc51a737715f9ab554c951d6ad`;
-
-            const response = await fetch(url);
-            const data = await response.json();
-
-            const image = data.poster_path
-              ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-              : data.backdrop_path
-                ? `https://image.tmdb.org/t/p/w500${data.backdrop_path}`
-                : '/LOGO.png';
-
-            return {
-              ...item,
-              title: type === 'tv' ? data.name : data.title,
-              image: image,
-            };
-          })
-        );
-
-        setEnrichedContent(enrichedResults);
-      } catch (error) {
-        console.error('Error fetching content details:', error);
-      }
-    };
-
-    if (favoriteContent.length > 0) {
-      fetchContentDetails();
-    }
+    setEnrichedContent(favoriteContent);
   }, [favoriteContent]);
 
   const handleFileSelect = async (e) => {
@@ -222,6 +191,10 @@ const ProfilePage = () => {
     navigate(route);
   };
 
+  const handleRemoveFavorite = (id) => {
+    setEnrichedContent((prev) => prev.filter((item) => item.id !== id));
+  };
+
   if (loading) {
     return (
       <div className="profile-page">
@@ -231,167 +204,131 @@ const ProfilePage = () => {
     );
   }
 
-  const favoriteMovies = enrichedContent.filter((item) => item.mediaType === "movie");
-  const favoriteSeries = enrichedContent.filter((item) => item.mediaType === "tv");
-
   return (
-    <div className="profile-page">
-      <div className="profile-section">
-        <div className="profile-content">
-          <div className="profile-info">
-            <div className="profile-picture-section">
-              <div className="profile-picture">
-                <img
-                  src={userData.profile_picture
-                    ? `http://localhost:5000${userData.profile_picture}`
-                    : "https://via.placeholder.com/200"}
-                  alt="Profile"
-                />
-              </div>
-              <button className="change-picture-btn" onClick={() => fileInputRef.current.click()}>
-                Change Picture
-              </button>
-              <input
-                type="file"
-                ref={fileInputRef}
-                accept="image/*"
-                onChange={handleFileSelect}
-                style={{ display: 'none' }}
-              />
-              <div className="member-since">
-                <span>🕒</span>
-                <span>Member Since</span>
-                <div className="date">{userData.created_at ? new Date(userData.created_at).toLocaleDateString() : 'Loading...'}</div>
-              </div>
-            </div>
-
-            <div className="profile-details">
-              <div className="input-group">
-                <label>
-                  <span>👤</span>
-                  Username
-                </label>
-                <input
-                  type="text"
-                  name="username"
-                  value={userData.username || ''}
-                  readOnly
-                />
-              </div>
-
-              <div className="input-group">
-                <label>
-                  <span>📧</span>
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={userData.email || ''}
-                  readOnly
-                />
-              </div>
-
-              <div className="input-group">
-                <label>
-                  <span>📞</span>
-                  Phone
-                </label>
-                <input
-                  type="tel"
-                  name="phone_number"
-                  value={userData.phone_number || ''}
-                  onChange={handleInputChange}
-                  placeholder="Enter phone number"
-                />
-              </div>
-
-              <div className="input-group">
-                <label>
-                  <span>🎂</span>
-                  Birthday
-                </label>
-                <input
-                  type="date"
-                  name="birthday"
-                  value={userData.birthday || ''}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="profile-actions">
-            <div className="save-section">
-              <button className="save-profile-btn" onClick={handleSaveProfile}>
-                SAVE PROFILE
-              </button>
-              {message && (
-                <div className={`message ${message.includes('Error') ? 'error' : 'success'}`}>
-                  {message}
+    <AppContainer>
+      <PageContainer>
+        <div className="profile-page">
+          <div className="profile-section glass-panel">
+            <div className="profile-content">
+              <div className="profile-info">
+                <div className="profile-picture-section">
+                  <div className="profile-picture">
+                    <img
+                      src={userData.profile_picture
+                        ? `http://localhost:5000${userData.profile_picture}`
+                        : "https://via.placeholder.com/200"}
+                      alt="Profile"
+                    />
+                  </div>
+                  <button className="change-picture-btn" onClick={() => fileInputRef.current.click()}>
+                    Change Picture
+                  </button>
+                  <input type="file" ref={fileInputRef} accept="image/*" onChange={handleFileSelect} style={{ display: 'none' }} />
+                  <div className="member-since">
+                    <span>🕒</span>
+                    <span>Member Since</span>
+                    <div className="date">{userData.created_at ? new Date(userData.created_at).toLocaleDateString() : 'Loading...'}</div>
+                  </div>
                 </div>
-              )}
+
+                <div className="profile-details">
+                  <div className="input-group">
+                    <label>
+                      <span>👤</span>
+                      Username
+                    </label>
+                    <input type="text" name="username" value={userData.username || ''} readOnly />
+                  </div>
+
+                  <div className="input-group">
+                    <label>
+                      <span>📧</span>
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={userData.email || ''}
+                      readOnly
+                    />
+                  </div>
+
+                  <div className="input-group">
+                    <label>
+                      <span>📞</span>
+                      Phone
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone_number"
+                      value={userData.phone_number || ''}
+                      onChange={handleInputChange}
+                      placeholder="Enter phone number"
+                    />
+                  </div>
+
+                  <div className="input-group">
+                    <label>
+                      <span>🎂</span>
+                      Birthday
+                    </label>
+                    <input
+                      type="date"
+                      name="birthday"
+                      value={userData.birthday || ''}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="profile-actions">
+                <div className="save-section">
+                  <button className="save-profile-btn" onClick={handleSaveProfile}>
+                    SAVE PROFILE
+                  </button>
+                  {message && (
+                    <div className={`message ${message.includes('Error') ? 'error' : 'success'}`}>
+                      {message}
+                    </div>
+                  )}
+                </div>
+                <button className="delete-account-btn" onClick={handleDeleteClick}>
+                  DELETE ACCOUNT
+                </button>
+              </div>
             </div>
-            <button className="delete-account-btn" onClick={handleDeleteClick}>
-              DELETE ACCOUNT
-            </button>
           </div>
-        </div>
-      </div>
 
-      {showDeleteModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h2>Delete Account</h2>
-            <p>Are you sure you want to delete your account? This action cannot be undone.</p>
-            <div className="modal-buttons">
-              <button className="modal-cancel" onClick={handleDeleteCancel}>
-                Cancel
-              </button>
-              <button className="modal-delete" onClick={handleDeleteConfirm}>
-                Delete Account
-              </button>
+          {showDeleteModal && (
+            <div className="modal-overlay">
+              <div className="modal-content">
+                <h2>Delete Account</h2>
+                <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                <div className="modal-buttons">
+                  <button className="modal-cancel" onClick={handleDeleteCancel}>
+                    Cancel
+                  </button>
+                  <button className="modal-delete" onClick={handleDeleteConfirm}>
+                    Delete Account
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
+          )}
+
+          <Section title="Your favorites" subtitle="Saved titles and curated picks">
+            {enrichedContent.length > 0 ? (
+              <ContentGrid content={enrichedContent} onClick={handleContentClick} isProfilePage={true} onRemoveFavorite={handleRemoveFavorite} />
+            ) : (
+              <div className="empty-state">
+                <p>No favorites yet. Browse the catalog and save your next watch.</p>
+              </div>
+            )}
+          </Section>
         </div>
-      )}
-
-      <h1>Your Favorites</h1>
-
-      <div className="favorites-section">
-        <h2>Favorite Movies</h2>
-        {favoriteMovies.length > 0 ? (
-          <ContentGrid
-            content={favoriteMovies.map((item) => ({
-              ...item,
-              poster_path: item.image.replace("https://image.tmdb.org/t/p/w500", ""),
-              media_type: "movie"
-            }))}
-            onClick={handleContentClick}
-            isProfilePage={true}
-          />
-        ) : (
-          <p className="no-favorites">No favorite movies yet!</p>
-        )}
-      </div>
-
-      <div className="favorites-section">
-        <h2>Favorite Series</h2>
-        {favoriteSeries.length > 0 ? (
-          <ContentGrid
-            content={favoriteSeries.map((item) => ({
-              ...item,
-              poster_path: item.image.replace("https://image.tmdb.org/t/p/w500", ""),
-              media_type: "tv"
-            }))}
-            onClick={handleContentClick}
-            isProfilePage={true}
-          />
-        ) : (
-          <p className="no-favorites">No favorite series yet!</p>
-        )}
-      </div>
-    </div>
+      </PageContainer>
+    </AppContainer>
   );
 };
 

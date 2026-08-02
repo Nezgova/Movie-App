@@ -4,17 +4,25 @@
   "private": true,
   "proxy": "http://localhost:5000",
   "dependencies": {
+    "@react-three/fiber": "^9.7.0",
+    "@shadergradient/react": "^2.4.20",
     "axios": "^1.7.9",
+    "camera-controls": "^3.1.2",
     "cra-template": "1.2.0",
     "font-awesome": "^4.7.0",
+    "framer-motion": "^12.43.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.0.2",
     "react-scripts": "5.0.1",
+    "three": "^0.185.1",
+    "three-stdlib": "^2.36.1",
     "web-vitals": "^4.2.4"
   },
   "scripts": {
-    "start": "react-scripts start"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": [
@@ -35,6 +43,10 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^7.0.0",
+    "@testing-library/react": "^16.3.2",
+    "@types/three": "^0.185.3",
     "concurrently": "^9.1.0"
   }
 }

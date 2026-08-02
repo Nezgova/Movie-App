@@ -17,7 +17,7 @@ const SearchBar = ({
 
   return (
     <div className="search-bar">
-      <div className="search-container">
+      <div className="search-container glass-panel">
         <input
           type="text"
           placeholder="Search for movies or series..."

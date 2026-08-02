@@ -226,6 +226,8 @@ app.get('/favorites', authenticateToken, (req, res) => {
 
     const transformedResults = results.map(item => ({
       id: item.content_id,
+      content_id: item.content_id,
+      media_type: item.media_type,
       mediaType: item.media_type,
       title: '',
       image: '',

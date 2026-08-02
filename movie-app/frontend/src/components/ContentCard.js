@@ -27,7 +27,7 @@ const ContentCard = ({ id, title, image, mediaType, onClick, isProfilePage, onRe
   const handleFavoriteClick = async (e) => {
     e.stopPropagation();
     setIsLoading(true);
-    
+
     try {
       if (isProfilePage) {
         await removeFromFavorites(id);
@@ -44,31 +44,34 @@ const ContentCard = ({ id, title, image, mediaType, onClick, isProfilePage, onRe
         }
       }
     } catch (error) {
-      console.error('Error handling favorite:', error);
-      // You might want to add some error notification here
+      console.error("Error handling favorite:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="content-card-container" onClick={() => onClick(id, mediaType)}>
+    <div className="content-card-container" onClick={() => onClick(id, mediaType)} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && onClick(id, mediaType)}>
       <div id={`card-${id}`} className="content-card" ref={cardRef}>
         <div className="card-poster">
-          <img
-            src={image || "https://via.placeholder.com/500x750?text=No+Image"}
-            alt={title}
-          />
-          <button 
-            className={`fav-btn ${isProfilePage ? 'remove-btn' : ''} ${isLoading ? 'loading' : ''}`}
+          <img src={image || "https://via.placeholder.com/500x750?text=No+Image"} alt={title} />
+          <div className="content-card-overlay">
+            <div className="card-meta">
+              <span className="card-chip">{mediaType === "tv" ? "Series" : "Movie"}</span>
+              <span className="card-chip">4K</span>
+            </div>
+            <h3 className="card-title">{title}</h3>
+          </div>
+          <button
+            className={`fav-btn ${isProfilePage ? "remove-btn" : ""} ${isLoading ? "loading" : ""}`}
             onClick={handleFavoriteClick}
             disabled={isLoading}
+            aria-label={isProfilePage ? `Remove ${title} from favorites` : `Add ${title} to favorites`}
           >
-            {isLoading ? '...' : isProfilePage ? '−' : '+'}
+            {isLoading ? "…" : isProfilePage ? "−" : "+"}
           </button>
         </div>
       </div>
-      <h3 className="card-title">{title}</h3>
     </div>
   );
 };
