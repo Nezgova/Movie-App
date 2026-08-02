@@ -1,11 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import "./ContentCard.css";
-import { useFavorites } from "./FavoritesContext";
 
-const ContentCard = ({ id, title, image, mediaType, onClick, isProfilePage, onRemoveFavorite }) => {
+const ContentCard = ({ id, title, image, mediaType, onClick }) => {
   const cardRef = useRef(null);
-  const { favoriteContent, addToFavorites, removeFromFavorites } = useFavorites();
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const card = cardRef.current;
@@ -24,32 +21,6 @@ const ContentCard = ({ id, title, image, mediaType, onClick, isProfilePage, onRe
     return () => card.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const handleFavoriteClick = async (e) => {
-    e.stopPropagation();
-    setIsLoading(true);
-
-    try {
-      if (isProfilePage) {
-        await removeFromFavorites(id);
-        onRemoveFavorite?.(id);
-      } else {
-        const isAlreadyFavorite = favoriteContent.some((item) => item.id === id);
-        if (!isAlreadyFavorite) {
-          await addToFavorites({
-            id,
-            title,
-            image,
-            mediaType: mediaType || "movie"
-          });
-        }
-      }
-    } catch (error) {
-      console.error("Error handling favorite:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
     <div className="content-card-container" onClick={() => onClick(id, mediaType)} role="button" tabIndex={0} onKeyDown={(e) => e.key === "Enter" && onClick(id, mediaType)}>
       <div id={`card-${id}`} className="content-card" ref={cardRef}>
@@ -62,14 +33,6 @@ const ContentCard = ({ id, title, image, mediaType, onClick, isProfilePage, onRe
             </div>
             <h3 className="card-title">{title}</h3>
           </div>
-          <button
-            className={`fav-btn ${isProfilePage ? "remove-btn" : ""} ${isLoading ? "loading" : ""}`}
-            onClick={handleFavoriteClick}
-            disabled={isLoading}
-            aria-label={isProfilePage ? `Remove ${title} from favorites` : `Add ${title} to favorites`}
-          >
-            {isLoading ? "…" : isProfilePage ? "−" : "+"}
-          </button>
         </div>
       </div>
     </div>
