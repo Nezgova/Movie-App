@@ -15,7 +15,7 @@ const Navbar = ({ onLogout }) => {
         <div className="logo-section">
           <img src="/LOGO.png" alt="Nezflix Logo" className="logo" />
           <span className="logo-text">
-            <span className="red-n">N</span>ezflix
+            <span className="blue-n">N</span>ezflix
           </span>
         </div>
         <button className="menu-toggle" onClick={toggleMenu}>

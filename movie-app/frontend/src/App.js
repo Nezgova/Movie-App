@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { ShaderGradientCanvas, ShaderGradient } from "@shadergradient/react";
 import { useEffect, useState } from "react";
 import Login from "./components/login";
 import Register from "./components/register";
@@ -76,27 +75,6 @@ const App = () => {
     <FavoritesProvider>
       <Router>
         <div className="ambient-bg" aria-hidden="true">
-          <ShaderGradientCanvas
-            style={{ position: "fixed", inset: 0, zIndex: -2 }}
-            pixelDensity={1.2}
-            fov={45}
-          >
-            <ShaderGradient
-              animate="on"
-              shader="defaults"
-              type="plane"
-              lightType="3d"
-              cDistance={3.8}
-              cPolarAngle={90}
-              uFrequency={4.8}
-              uSpeed={0.28}
-              uStrength={3.4}
-              grain="on"
-              color1="#050505"
-              color2="#0B1220"
-              color3="#2563EB"
-            />
-          </ShaderGradientCanvas>
           <div className="ambient-overlay" />
         </div>
         <AppRoutes isAuthenticated={isAuthenticated} handleLogout={handleLogout} setIsAuthenticated={setIsAuthenticated} />
