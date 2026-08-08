@@ -141,7 +141,3 @@ npm start
 - **Abderrazik Achraf**
 
 ---
-
-## 📜 License
-
-This project is open-source and available under the [ISC License](https://opensource.org/licenses/ISC).
