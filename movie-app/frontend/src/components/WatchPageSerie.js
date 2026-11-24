@@ -63,7 +63,7 @@ const WatchPageSerie = () => {
   const generateVideoUrl = () => {
     const sNumber = selectedEpisode?.season_number || season || 1;
     const eNumber = selectedEpisode?.episode_number || episode || 1;
-    return `https://vidsrc.sbs/embed/tv/${id}/${sNumber}/${eNumber}`;
+    return `https://vidsrc.mov/embed/tv/${id}/${sNumber}/${eNumber}`;
   };
 
   if (!serie || !episodes.length) return <p>Loading...</p>;
