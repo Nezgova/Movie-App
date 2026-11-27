@@ -22,7 +22,7 @@ const WatchPage = () => {
     fetchMovieDetails();
   }, [id]);
 
-  const generateVideoUrl = () => `https://vidsrc.mov/embed/movie/${id}`;
+  const generateVideoUrl = () => `https://cinesrc.st/embed/movie/${id}`;
 
   if (!movie) return <div className="detail-panel">Loading movie details...</div>;
 
